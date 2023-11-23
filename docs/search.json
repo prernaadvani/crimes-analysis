@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "YOUR PROJECT TITLE",
+    "title": "NYC Crimes Analysis",
     "section": "",
-    "text": "1 Introduction"
+    "text": "1 Introduction\nWhen choosing a topic for our final project, we brainstormed a few different ideas that were relevant to our current environment. There initial ideas included a climate analysis - we found data on regional climate variables (ex: precipitation, snow, max and min temperature, etc.), economic variables (ex: unemployment, inflation, etc.), prior Google Mobility data (indexed time spent in Parks, Grocery Stores, etc.), and NYPD crimes data (frequency of top 7 crimes, crimes at NY parks, etc.).\nTo narrow our search, we completed some high level analysis to examine the quality and depth of our data options. We looked at the different variables offered in each dataset, the duration and frequency of data collection, and how we may potentially be able to tie multiple datasets together.\nWe decided to analyze the crimes at NYC parks for a few different reasons. First, as NY residents, an analysis of a topic directly relevant to both of our lives was of high interest. Secondly, we saw that the depth of data available directly from the NYPD was robust, covering around 1 decade worth of data across different parks and different types of crimes. We immediately had several ideas for different types of analysis, data slicing, and visualizations we could show with this dataset. Lastly, in thinking about how it may correlate to other factors, we are planning to merge crime data with unemployment rates to determine if there are any correlations. We may also tentatively merge this data with Google Mobility data for time spent at parks in NY to determine if there is a correlation there, though we note that the data is only available for a few years and have been discontinued."
   },
   {
     "objectID": "data.html#description",
