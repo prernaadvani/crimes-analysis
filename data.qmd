@@ -2,4 +2,10 @@
 
 ## Description
 
+We collected crime data in NYC from NYPD official websites focused on crime statistics. The link of data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page).
+
+We collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://data.bls.gov/cgi-bin/surveymost). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered in this website is able to search umemployment data for NYC. Monthly unemployment data is avaliable from 1976 to 2023 without missing values. This means we have comlpete data for unemployment.
+
+We also collected mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period.
+
 ## Missing value analysis
