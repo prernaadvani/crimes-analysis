@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -57,7 +91,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -76,7 +111,7 @@ ul.task-list li input[type="checkbox"] {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -90,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">NYC Crimes Analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/prernaadvani/crimes-analysis" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/prernaadvani/crimes-analysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -142,7 +177,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</a></li>
+  <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research Plan</a></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -168,9 +204,155 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<p>As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.</p>
+<p>First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link of data is <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page">NYPD Crime Statistics</a>. The data covers quaters from 2014 to 2023. Each quater dataset shows features like numbers of crimes, park sizes, and boroughs. For our study, we focused on three factors: total number of crimes, park size categorites, and boroughs.</p>
+<p>Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is <a href="https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm">NYC Unemployment Statistics</a>. Additionally, <a href="https://beta.bls.gov/dataQuery/search">BLS Data Finder</a> offered in this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.</p>
+<p>Last, we collected mobility data from Google Community Mobility Reports. The link of data is <a href="https://www.google.com/covid19/mobility/">Mobility Data</a>. Daily data of movement trend in places such as parks is available in the Covid-19 period.</p>
 </section>
-<section id="missing-value-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>
+<section id="research-plan" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research Plan</h2>
+<ol type="1">
+<li><p>Time series analysis for crimes data. We conducted time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations).</p></li>
+<li><p>Heatmaps and bar charts for crimes data. We illustrated crimes data in heatmaps based on boroughs and periods to find time and regional differences. Bar charts are used to show the specific numbers of crimes for boroughs.</p></li>
+<li><p>Relationship between crimes and employment rate. We looked into trends for total number of crimes and unemployment rates both anually and monthly. We first demonstrated these two variables in scatterplots.</p></li>
+<li><p>Relationship between crimes and mobility data. We looked into the crimes and mobility data for different parks and boroughs, investigating whether visitors flow affects crimes.</p></li>
+</ol>
+</section>
+<section id="missing-value-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
+<p>First, we examine the crimes datasets. There are few missing values in our data. We can just delete the records with missing values.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/nyc-park-crime-stats-q3-2023.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+• `` -&gt; `...2`
+• `` -&gt; `...3`
+• `` -&gt; `...4`
+• `` -&gt; `...5`
+• `` -&gt; `...6`
+• `` -&gt; `...7`
+• `` -&gt; `...8`
+• `` -&gt; `...9`
+• `` -&gt; `...10`
+• `` -&gt; `...11`
+• `` -&gt; `...12`</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># show part of data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyc_park_crime_stats_q3_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  3rd QTR PARK CRIME REP…¹ ...2  ...3  ...4  ...5  ...6  ...7  ...8  ...9  ...10
+  &lt;chr&gt;                    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1 SEVEN MAJOR COMPLAINTS   &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+2 Report covering the per… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; 
+3 PARK                     BORO… SIZE… CATE… MURD… RAPE  ROBB… FELO… BURG… GRAN…
+4 CORONA HEALTH SANCTUARY  QUEE… 0.101 PLAY… 0     0     0     0     0     0    
+5 LT. FEDERICO NARVAEZ TO… BROO… 0.125 PLAY… 0     0     0     0     0     0    
+6 SOBEL PLAYGROUND         BROO… 0.135 PLAY… 0     0     0     0     0     0    
+# ℹ abbreviated name: ¹​`3rd QTR PARK CRIME REPORT`
+# ℹ 2 more variables: ...11 &lt;chr&gt;, ...12 &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Here, we show the features of crimes data: park, borough, park size, number of crimes.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># examine whether thre are missing values</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(nyc_park_crime_stats_q3_2023))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>3rd QTR PARK CRIME REPORT                      ...2                      ...3 
+                        0                         3                         3 
+                     ...4                      ...5                      ...6 
+                        3                         2                         2 
+                     ...7                      ...8                      ...9 
+                        2                         2                         2 
+                    ...10                     ...11                     ...12 
+                        2                         2                         2 </code></pre>
+</div>
+</div>
+<p>Here, we can see there are only several missing values in each column, which are negligible. Therefore we just delete the records with missing values.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nyc_park_crime_stats_q3_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Then, we examine the dataset for unemploy rates.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 14
+    Year   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  2013   9.1   9.1   9     9     8.9   8.9   8.9   8.9   8.7   8.6   8.4   8.2
+ 2  2014   8     7.8   7.6   7.5   7.3   7.1   6.9   6.8   6.6   6.5   6.4   6.3
+ 3  2015   6.2   6.1   6     5.9   5.7   5.6   5.4   5.2   5.2   5.1   5.2   5.2
+ 4  2016   5.2   5.2   5.2   5.1   5.1   5.2   5.2   5.3   5.2   5.2   5     4.9
+ 5  2017   4.7   4.6   4.5   4.5   4.5   4.6   4.6   4.6   4.5   4.5   4.4   4.3
+ 6  2018   4.3   4.2   4.2   4.1   4.1   4     4     4     4.1   4.2   4.3   4.3
+ 7  2019   4.3   4.2   4.1   4     3.9   3.8   3.8   3.8   3.8   3.8   3.9   4  
+ 8  2020   4.1   4.3   4.5  12.7  21.4  17.1  16.5  14.8  14.3  13.2  12.9  12.6
+ 9  2021  12.3  11.9  11.4  11.1  10.4  10.5   9.8   9.6   8.8   8.5   8.1   8  
+10  2022   7.6   6.9   6.3   5.9   5.5   5.2   4.9   4.6   4.9   5.2   5.2   5.1
+11  2023   5.3   5.4   5.3   5.4   5.3   5.4   5.3   5.3   5.3   5.4  NA    NA  
+# ℹ 1 more variable: Avg &lt;lgl&gt;</code></pre>
+</div>
+</div>
+<p>It’s obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can direcly compute the average rates based on monthly rates.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>For the last two months in 2023, it’s reasonable because it does not have any historical data. We use the data for Oct to fill in missing value for Nov and Dec.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>last_row <span class="ot">&lt;-</span> <span class="fu">nrow</span>(unemployment_rate)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Nov"</span>] <span class="ot">&lt;-</span> unemployment_rate[last_row, <span class="st">"Oct"</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Dec"</span>] <span class="ot">&lt;-</span> unemployment_rate[last_row, <span class="st">"Oct"</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># re-compute avarage unemployment rate</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Avg"</span>] <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[last_row, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 11 × 14
+    Year   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  2013   9.1   9.1   9     9     8.9   8.9   8.9   8.9   8.7   8.6   8.4   8.2
+ 2  2014   8     7.8   7.6   7.5   7.3   7.1   6.9   6.8   6.6   6.5   6.4   6.3
+ 3  2015   6.2   6.1   6     5.9   5.7   5.6   5.4   5.2   5.2   5.1   5.2   5.2
+ 4  2016   5.2   5.2   5.2   5.1   5.1   5.2   5.2   5.3   5.2   5.2   5     4.9
+ 5  2017   4.7   4.6   4.5   4.5   4.5   4.6   4.6   4.6   4.5   4.5   4.4   4.3
+ 6  2018   4.3   4.2   4.2   4.1   4.1   4     4     4     4.1   4.2   4.3   4.3
+ 7  2019   4.3   4.2   4.1   4     3.9   3.8   3.8   3.8   3.8   3.8   3.9   4  
+ 8  2020   4.1   4.3   4.5  12.7  21.4  17.1  16.5  14.8  14.3  13.2  12.9  12.6
+ 9  2021  12.3  11.9  11.4  11.1  10.4  10.5   9.8   9.6   8.8   8.5   8.1   8  
+10  2022   7.6   6.9   6.3   5.9   5.5   5.2   4.9   4.6   4.9   5.2   5.2   5.1
+11  2023   5.3   5.4   5.3   5.4   5.3   5.4   5.3   5.3   5.3   5.4   5.4   5.4
+# ℹ 1 more variable: Avg &lt;dbl&gt;</code></pre>
+</div>
+</div>
 
 
 </section>

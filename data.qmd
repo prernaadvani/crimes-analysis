@@ -2,10 +2,73 @@
 
 ## Description
 
-We collected crime data in NYC from NYPD official websites focused on crime statistics. The link of data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page).
+As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.
 
-We collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://data.bls.gov/cgi-bin/surveymost). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered in this website is able to search umemployment data for NYC. Monthly unemployment data is avaliable from 1976 to 2023 without missing values. This means we have comlpete data for unemployment.
+First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link of data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page). The data covers quaters from 2014 to 2023. Each quater dataset shows features like numbers of crimes, park sizes, and boroughs. For our study, we focused on three factors: total number of crimes, park size categorites, and boroughs.
 
-We also collected mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period.
+Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered in this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.
+
+Last, we collected mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period.
+
+## Research Plan
+
+1. Time series analysis for crimes data. We conducted time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations). 
+
+2. Heatmaps and bar charts for crimes data. We illustrated crimes data in heatmaps based on boroughs and periods to find time and regional differences. Bar charts are used to show the specific numbers of crimes for boroughs.
+
+3. Relationship between crimes and employment rate. We looked into trends for total number of crimes and unemployment rates both anually and monthly. We first demonstrated these two variables in scatterplots.
+
+4. Relationship between crimes and mobility data. We looked into the crimes and mobility data for different parks and boroughs, investigating whether visitors flow affects crimes.
 
 ## Missing value analysis
+
+First, we examine the crimes datasets. There are few missing values in our data. We can just delete the records with missing values.
+
+```{r}
+library(readxl)
+nyc_park_crime_stats_q3_2023 <- read_excel("~/Desktop/nyc-park-crime-stats-q3-2023.xlsx")
+
+# show part of data
+head(nyc_park_crime_stats_q3_2023)
+```
+Here, we show the features of crimes data: park, borough, park size, number of crimes.
+
+```{r}
+# examine whether thre are missing values
+colSums(is.na(nyc_park_crime_stats_q3_2023))
+```
+Here, we can see there are only several missing values in each column, which are negligible. Therefore we just delete the records with missing values.
+
+```{r}
+nyc_park_crime_stats_q3_2023_clean <- na.omit(nyc_park_crime_stats_q3_2023)
+```
+
+
+Then, we examine the dataset for unemploy rates.
+
+```{r}
+unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx")
+print(unemployment_rate)
+```
+
+It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can direcly compute the average rates based on monthly rates.
+
+```{r}
+unemployment_rate$Avg <- rowMeans(unemployment_rate[, 2:13], na.rm = TRUE)
+```
+
+For the last two months in 2023, it's reasonable because it does not have any historical data. We use the data for Oct to fill in missing value for Nov and Dec.
+
+```{r}
+last_row <- nrow(unemployment_rate)
+
+unemployment_rate[last_row, "Nov"] <- unemployment_rate[last_row, "Oct"]
+unemployment_rate[last_row, "Dec"] <- unemployment_rate[last_row, "Oct"]
+
+# re-compute avarage unemployment rate
+unemployment_rate[last_row, "Avg"] <- rowMeans(unemployment_rate[last_row, 2:13], na.rm = TRUE)
+```
+
+```{r}
+print(unemployment_rate)
+```
