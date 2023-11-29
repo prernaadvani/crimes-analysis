@@ -92,7 +92,7 @@ unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx") #read data
 print(unemployment_rate)
 ```
 
-It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can direcly compute the average rates based on monthly rates.
+It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can directly compute the average rates based on monthly rates.
 
 ```{r}
 unemployment_rate$Avg <- rowMeans(unemployment_rate[, 2:13], na.rm = TRUE)
