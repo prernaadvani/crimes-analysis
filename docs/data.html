@@ -178,7 +178,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
   <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research Plan</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</a>
+  <ul class="collapse">
+  <li><a href="#crimes-data" id="toc-crimes-data" class="nav-link" data-scroll-target="#crimes-data"><span class="header-section-number">2.3.1</span> Crimes Data</a></li>
+  <li><a href="#unemployment-rate-data" id="toc-unemployment-rate-data" class="nav-link" data-scroll-target="#unemployment-rate-data"><span class="header-section-number">2.3.2</span> Unemployment Rate Data</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -205,27 +209,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
 <p>As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.</p>
-<p>First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link of data is <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page">NYPD Crime Statistics</a>. The data covers quaters from 2014 to 2023. Each quater dataset shows features like numbers of crimes, park sizes, and boroughs. For our study, we focused on three factors: total number of crimes, park size categorites, and boroughs.</p>
-<p>Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is <a href="https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm">NYC Unemployment Statistics</a>. Additionally, <a href="https://beta.bls.gov/dataQuery/search">BLS Data Finder</a> offered in this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.</p>
-<p>Last, we collected mobility data from Google Community Mobility Reports. The link of data is <a href="https://www.google.com/covid19/mobility/">Mobility Data</a>. Daily data of movement trend in places such as parks is available in the Covid-19 period.</p>
+<p>First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page">NYPD Crime Statistics</a>. The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. For our study, we focused on three factors: total number of different types of crimes, park size categories, and boroughs.</p>
+<p>Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is <a href="https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm">NYC Unemployment Statistics</a>. Additionally, <a href="https://beta.bls.gov/dataQuery/search">BLS Data Finder</a> offered on this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.</p>
+<p>Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is <a href="https://www.google.com/covid19/mobility/">Mobility Data</a>. Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from <a href="https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv">this GitHub Repo</a>.</p>
 </section>
 <section id="research-plan" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research Plan</h2>
 <ol type="1">
 <li><p>Time series analysis for crimes data. We conducted time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations).</p></li>
 <li><p>Heatmaps and bar charts for crimes data. We illustrated crimes data in heatmaps based on boroughs and periods to find time and regional differences. Bar charts are used to show the specific numbers of crimes for boroughs.</p></li>
-<li><p>Relationship between crimes and employment rate. We looked into trends for total number of crimes and unemployment rates both anually and monthly. We first demonstrated these two variables in scatterplots.</p></li>
-<li><p>Relationship between crimes and mobility data. We looked into the crimes and mobility data for different parks and boroughs, investigating whether visitors flow affects crimes.</p></li>
+<li><p>Relationship between crimes and employment rate. We looked into trends for total number of crimes and unemployment rates both annually and quarterly. We first demonstrated these two variables in scatterplots.</p></li>
+<li><p>Relationship between crimes and mobility data. For February 2020 to October 2022, we looked into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.</p></li>
 </ol>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
-<p>First, we examine the crimes datasets. There are few missing values in our data. We can just delete the records with missing values.</p>
+<section id="crimes-data" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="crimes-data"><span class="header-section-number">2.3.1</span> Crimes Data</h3>
+<p>First, we examine the crimes datasets. We will begin by first pulling data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/nyc-park-crime-stats-q3-2023.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/nyc-park-crime-stats-q3-2023.xlsx"</span>) <span class="co">#read data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
@@ -260,37 +266,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 2 more variables: ...11 &lt;chr&gt;, ...12 &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>Here, we show the features of crimes data: park, borough, park size, number of crimes.</p>
+<p>We can see that there are a few extra rows of data at the top and row 3 needs to be the header.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># examine whether thre are missing values</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(nyc_park_crime_stats_q3_2023))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(nyc_park_crime_stats_q3_2023) <span class="ot">=</span> nyc_park_crime_stats_q3_2023[<span class="dv">3</span>,] <span class="co">#set row 3 as header</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023 <span class="ot">=</span> nyc_park_crime_stats_q3_2023[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), ] <span class="co">#remove first 3 rows of data</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyc_park_crime_stats_q3_2023) <span class="co">#new data column names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>3rd QTR PARK CRIME REPORT                      ...2                      ...3 
-                        0                         3                         3 
-                     ...4                      ...5                      ...6 
-                        3                         2                         2 
-                     ...7                      ...8                      ...9 
-                        2                         2                         2 
-                    ...10                     ...11                     ...12 
-                        2                         2                         2 </code></pre>
+<pre><code># A tibble: 6 × 12
+  PARK     BOROUGH `SIZE (ACRES)` CATEGORY MURDER RAPE  ROBBERY `FELONY ASSAULT`
+  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;           
+1 CORONA … QUEENS  0.101          PLAYGRO… 0      0     0       0               
+2 LT. FED… BROOKL… 0.125          PLAYGRO… 0      0     0       0               
+3 SOBEL P… BROOKL… 0.135          PLAYGRO… 0      0     0       0               
+4 BILL BO… MANHAT… 0.172          BASKETB… 0      0     0       0               
+5 WILLIAM… QUEENS  0.230          PLAYGRO… 0      0     1       2               
+6 SUNSHIN… MANHAT… 0.240          PLAYGRO… 0      0     0       0               
+# ℹ 4 more variables: BURGLARY &lt;chr&gt;, `GRAND LARCENY` &lt;chr&gt;,
+#   `GRAND LARCENY OF MOTOR VEHICLE` &lt;chr&gt;, TOTAL &lt;chr&gt;</code></pre>
 </div>
 </div>
-<p>Here, we can see there are only several missing values in each column, which are negligible. Therefore we just delete the records with missing values.</p>
+<p>Here, we show the features of crimes data: park, borough, park size, number of crimes by type of crime.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nyc_park_crime_stats_q3_2023)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># examine whether thre are missing values</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(nyc_park_crime_stats_q3_2023))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          PARK                        BOROUGH 
+                             0                              1 
+                  SIZE (ACRES)                       CATEGORY 
+                             1                              1 
+                        MURDER                           RAPE 
+                             0                              0 
+                       ROBBERY                 FELONY ASSAULT 
+                             0                              0 
+                      BURGLARY                  GRAND LARCENY 
+                             0                              0 
+GRAND LARCENY OF MOTOR VEHICLE                          TOTAL 
+                             0                              0 </code></pre>
 </div>
-<p>Then, we examine the dataset for unemploy rates.</p>
+</div>
+<p>Here, we can see there are only some missing values in each column, which are negligible. Therefore we just delete the records with missing values.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(nyc_park_crime_stats_q3_2023)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nyc_park_crime_stats_q3_2023_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  PARK     BOROUGH `SIZE (ACRES)` CATEGORY MURDER RAPE  ROBBERY `FELONY ASSAULT`
+  &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;           
+1 CORONA … QUEENS  0.101          PLAYGRO… 0      0     0       0               
+2 LT. FED… BROOKL… 0.125          PLAYGRO… 0      0     0       0               
+3 SOBEL P… BROOKL… 0.135          PLAYGRO… 0      0     0       0               
+4 BILL BO… MANHAT… 0.172          BASKETB… 0      0     0       0               
+5 WILLIAM… QUEENS  0.230          PLAYGRO… 0      0     1       2               
+6 SUNSHIN… MANHAT… 0.240          PLAYGRO… 0      0     0       0               
+# ℹ 4 more variables: BURGLARY &lt;chr&gt;, `GRAND LARCENY` &lt;chr&gt;,
+#   `GRAND LARCENY OF MOTOR VEHICLE` &lt;chr&gt;, TOTAL &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>To visualize the crimes by borough, we first compute the total crimes.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>nyc_park_crime_stats_q3_2023_clean <span class="ot">&lt;-</span> nyc_park_crime_stats_q3_2023_clean <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(TOTAL), as.numeric)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute total crimes for boroughs</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>borough_crime_totals <span class="ot">&lt;-</span> nyc_park_crime_stats_q3_2023_clean <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(BOROUGH) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(TOTAL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(borough_crime_totals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  BOROUGH         Total_Crimes
+  &lt;chr&gt;                  &lt;dbl&gt;
+1 BRONX                     51
+2 BROOKLYN                  98
+3 BROOKLYN/QUEENS            5
+4 MANHATTAN                143
+5 QUEENS                    94
+6 STATEN ISLAND              7</code></pre>
+</div>
+</div>
+<p>Then we use bar chart to show the results.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>borough_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Borough =</span> <span class="fu">c</span>(<span class="st">'BRONX'</span>, <span class="st">'BROOKLYN'</span>, <span class="st">'BROOKLYN/QUEENS'</span>, <span class="st">'MANHATTAN'</span>, <span class="st">'QUEENS'</span>, <span class="st">'STATEN ISLAND'</span>),</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total =</span> <span class="fu">c</span>(<span class="dv">51</span>, <span class="dv">98</span>, <span class="dv">5</span>, <span class="dv">143</span>, <span class="dv">94</span>, <span class="dv">7</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x=</span>Borough, <span class="at">y=</span>Total, <span class="at">fill=</span>Borough)) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"NYC Park Crime Distribution by Borough"</span>, <span class="at">x=</span><span class="st">"Borough"</span>, <span class="at">y=</span><span class="st">"Total Crimes"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="unemployment-rate-data" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="unemployment-rate-data"><span class="header-section-number">2.3.2</span> Unemployment Rate Data</h3>
+<p>Then, we examine the dataset for unemployment rates.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>) <span class="co">#read data</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 14
@@ -314,26 +427,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>For the last two months in 2023, it’s reasonable because it does not have any historical data. We use the data for Oct to fill in missing value for Nov and Dec.</p>
+<p>As for missing values for the last two months in 2023, it’s reasonable because there is no data available yet for months in the future. We can just ignore the missing values here.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>last_row <span class="ot">&lt;-</span> <span class="fu">nrow</span>(unemployment_rate)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Nov"</span>] <span class="ot">&lt;-</span> unemployment_rate[last_row, <span class="st">"Oct"</span>]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Dec"</span>] <span class="ot">&lt;-</span> unemployment_rate[last_row, <span class="st">"Oct"</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># re-compute avarage unemployment rate</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>unemployment_rate[last_row, <span class="st">"Avg"</span>] <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[last_row, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unemployment_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 11 × 14
@@ -349,12 +450,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  8  2020   4.1   4.3   4.5  12.7  21.4  17.1  16.5  14.8  14.3  13.2  12.9  12.6
  9  2021  12.3  11.9  11.4  11.1  10.4  10.5   9.8   9.6   8.8   8.5   8.1   8  
 10  2022   7.6   6.9   6.3   5.9   5.5   5.2   4.9   4.6   4.9   5.2   5.2   5.1
-11  2023   5.3   5.4   5.3   5.4   5.3   5.4   5.3   5.3   5.3   5.4   5.4   5.4
+11  2023   5.3   5.4   5.3   5.4   5.3   5.4   5.3   5.3   5.3   5.4  NA    NA  
 # ℹ 1 more variable: Avg &lt;dbl&gt;</code></pre>
 </div>
 </div>
+<p>The following line graph is a time series visualization showing the variation in unemployment rates for each month across different years. There are no gaps in this plot, verifying no missing values in the dataset.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.1.2</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>unemployment_long <span class="ot">&lt;-</span> unemployment_rate <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Jan<span class="sc">:</span>Dec, <span class="at">names_to =</span> <span class="st">"Month"</span>, <span class="at">values_to =</span> <span class="st">"UnemploymentRate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">match</span>(Month, month.abb))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(unemployment_long, <span class="fu">aes</span>(<span class="at">x =</span> Year <span class="sc">+</span> (Month<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">y =</span> UnemploymentRate)) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(unemployment_long<span class="sc">$</span>Year)) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly Unemployment Rate Over Years"</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
