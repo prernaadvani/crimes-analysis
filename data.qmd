@@ -57,6 +57,7 @@ head(nyc_park_crime_stats_q3_2023_clean)
 To visualize the crimes by borough, we first compute the total crimes.
 
 ```{r}
+library(dplyr)
 nyc_park_crime_stats_q3_2023_clean <- nyc_park_crime_stats_q3_2023_clean %>%
   mutate_at(vars(TOTAL), as.numeric)
 
@@ -76,7 +77,6 @@ borough_data <- data.frame(
     Total = c(51, 98, 5, 143, 94, 7)
 )
 
-# 绘制条形图
 ggplot(borough_data, aes(x=Borough, y=Total, fill=Borough)) +
     geom_bar(stat="identity") +
     theme_minimal() +
