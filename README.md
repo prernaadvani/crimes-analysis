@@ -16,5 +16,5 @@ Our approach involves various methods of data slicing, manipulation, and visuali
 
 ## Contributing
 
-
+This part is currently left empty and will be written after finishing our analysis.
 
