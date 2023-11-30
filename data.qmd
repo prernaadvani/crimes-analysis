@@ -69,18 +69,16 @@ borough_crime_totals <- nyc_park_crime_stats_q3_2023_clean %>%
 print(borough_crime_totals)
 ```
 Then we use bar chart to show the results.
+
 ```{r}
 library(ggplot2)
+borough_data = as.data.frame(borough_crime_totals)
 
-borough_data <- data.frame(
-    Borough = c('BRONX', 'BROOKLYN', 'BROOKLYN/QUEENS', 'MANHATTAN', 'QUEENS', 'STATEN ISLAND'),
-    Total = c(51, 98, 5, 143, 94, 7)
-)
-
-ggplot(borough_data, aes(x=Borough, y=Total, fill=Borough)) +
+ggplot(borough_data, aes(x = BOROUGH, y = Total_Crimes, fill = BOROUGH)) +
     geom_bar(stat="identity") +
     theme_minimal() +
-    labs(title="NYC Park Crime Distribution by Borough", x="Borough", y="Total Crimes")
+    labs(title="NYC Park Crime Distribution by Borough", x="Borough", y="Total Crimes") +
+    theme(axis.text.x = element_text(angle = 90))
 ```
 
 ### Unemployment Rate Data
