@@ -4,21 +4,23 @@
 
 As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.
 
-First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page). The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. For our study, we focused on three factors: total number of different types of crimes, park size categories, and boroughs.
+First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page). The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. The data format is an excel file for each quarter that we plan to download onto our local drives and import into R. We will then clean and merge data for all quarters. For our study, we focused on three factors: total number of different types of crimes, park size categories, and boroughs.
 
-Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.
+Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. We are downloading an excel file with all of the data from 2013-2023 onto our local drive and importing it into R. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.
 
-Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv).
+Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv). Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we will only be focusing on parks and NYC, if permitted to use this dataset.
 
 ## Research Plan
 
-1. Time series analysis for crimes data. We conducted time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations). 
+We plan to use NYC crimes data to track how the frequency of different types of crimes has changed across time and different boroughs. We will then use unemployment data to glean and additional insights on correlations that may exist. Lastly, if permitted, we can derive any impacts of park visit frequency from February 2020-October 2022. A few different ideas for analysis are included below:
 
-2. Heatmaps and bar charts for crimes data. We illustrated crimes data in heatmaps based on boroughs and periods to find time and regional differences. Bar charts are used to show the specific numbers of crimes for boroughs.
+1. Time series analysis for crimes data. We will conduct time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations). 
 
-3. Relationship between crimes and employment rate. We looked into trends for total number of crimes and unemployment rates both annually and quarterly. We first demonstrated these two variables in scatterplots.
+2. Heatmaps and bar charts for crimes data. We will illustrate crimes data in heatmaps based on boroughs and periods to find time and regional differences. Bar charts are used to show the specific numbers of crimes for boroughs.
 
-4. Relationship between crimes and mobility data. For February 2020 to October 2022, we looked into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.
+3. Relationship between crimes and employment rate. We will look into trends for total number of crimes and unemployment rates both annually and quarterly. We will first demonstrate these two variables in scatterplots.
+
+4. Relationship between crimes and mobility data. For February 2020 to October 2022, we may look into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.
 
 ## Missing value analysis
 
