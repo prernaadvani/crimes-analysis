@@ -8,7 +8,7 @@ First, we collected crime data in NYC from NYPD official websites focused on cri
 
 Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. Monthly unemployment data is available from 2013 to 2023.
 
-Last, looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv).
+Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv).
 
 ## Research Plan
 
@@ -21,6 +21,8 @@ Last, looked at high level mobility data from Google Community Mobility Reports.
 4. Relationship between crimes and mobility data. For February 2020 to October 2022, we looked into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.
 
 ## Missing value analysis
+
+### Crimes Data
 
 First, we examine the crimes datasets. We will begin by first pulling data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.
 
@@ -52,6 +54,36 @@ Here, we can see there are only some missing values in each column, which are ne
 nyc_park_crime_stats_q3_2023_clean <- na.omit(nyc_park_crime_stats_q3_2023)
 head(nyc_park_crime_stats_q3_2023_clean)
 ```
+To visualize the crimes by borough, we first compute the total crimes.
+
+```{r}
+library(dplyr)
+nyc_park_crime_stats_q3_2023_clean <- nyc_park_crime_stats_q3_2023_clean %>%
+  mutate_at(vars(TOTAL), as.numeric)
+
+# compute total crimes for boroughs
+borough_crime_totals <- nyc_park_crime_stats_q3_2023_clean %>%
+  group_by(BOROUGH) %>%
+  summarize(Total_Crimes = sum(TOTAL, na.rm = TRUE))
+
+print(borough_crime_totals)
+```
+Then we use bar chart to show the results.
+```{r}
+library(ggplot2)
+
+borough_data <- data.frame(
+    Borough = c('BRONX', 'BROOKLYN', 'BROOKLYN/QUEENS', 'MANHATTAN', 'QUEENS', 'STATEN ISLAND'),
+    Total = c(51, 98, 5, 143, 94, 7)
+)
+
+ggplot(borough_data, aes(x=Borough, y=Total, fill=Borough)) +
+    geom_bar(stat="identity") +
+    theme_minimal() +
+    labs(title="NYC Park Crime Distribution by Borough", x="Borough", y="Total Crimes")
+```
+
+### Unemployment Rate Data
 
 Then, we examine the dataset for unemployment rates.
 
@@ -60,24 +92,35 @@ unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx") #read data
 print(unemployment_rate)
 ```
 
-It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can direcly compute the average rates based on monthly rates.
+It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can directly compute the average rates based on monthly rates.
 
 ```{r}
 unemployment_rate$Avg <- rowMeans(unemployment_rate[, 2:13], na.rm = TRUE)
 ```
 
-For the last two months in 2023, it's reasonable because there is no data available yet for months in the future. We use the data for Oct to fill in missing value for Nov and Dec.
+As for missing values for the last two months in 2023, it's reasonable because there is no data available yet for months in the future. We can just ignore the missing values here.
 
-```{r}
-last_row <- nrow(unemployment_rate)
-
-unemployment_rate[last_row, "Nov"] <- unemployment_rate[last_row, "Oct"]
-unemployment_rate[last_row, "Dec"] <- unemployment_rate[last_row, "Oct"]
-
-# re-compute avarage unemployment rate
-unemployment_rate[last_row, "Avg"] <- rowMeans(unemployment_rate[last_row, 2:13], na.rm = TRUE)
-```
 
 ```{r}
 print(unemployment_rate)
 ```
+The following line graph is a time series visualization showing the variation in unemployment rates for each month across different years. There are no gaps in this plot, verifying no missing values in the dataset.
+
+```{r}
+library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+unemployment_long <- unemployment_rate %>%
+  pivot_longer(cols = Jan:Dec, names_to = "Month", values_to = "UnemploymentRate") %>%
+  mutate(Month = match(Month, month.abb))
+
+ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
+  geom_line() +
+  scale_x_continuous(breaks = unique(unemployment_long$Year)) +
+  labs(title = "Monthly Unemployment Rate Over Years",
+       x = "Year",
+       y = "Unemployment Rate (%)") +
+  theme_minimal()
+```
+
