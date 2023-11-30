@@ -123,4 +123,83 @@ ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
        y = "Unemployment Rate (%)") +
   theme_minimal()
 ```
+### Mobility Data
 
+We examine the mobility dataset. We only focus on the feature: parks_percent_change_from_baseline.
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+# Step 1: Read the CSV file
+file_path <- "~/Desktop/2022_US_Region_Mobility_Report.csv"  # read data
+data <- read_csv(file_path)
+
+# Step 2: Filter for New York Data
+nyc_data <- filter(data, sub_region_1 == "New York") # Replace 'region' with the correct column name
+
+# Step 3: Summarizing parks_percent_change_from_baseline by borough
+borough_summary <- nyc_data %>%
+    group_by(sub_region_2) %>%
+    summarize(Average_Metric = mean(parks_percent_change_from_baseline, na.rm = TRUE))
+
+# Step 4: Visualization
+ggplot(borough_summary, aes(x = sub_region_2, y = Average_Metric, fill = sub_region_2)) +
+    geom_bar(stat = "identity") +
+    theme_minimal() +
+    labs(title = "Title", x = "Borough", y = "Metric") +
+    theme(axis.text.x = element_text(angle = 90))
+```
+Noticing there are more boroughs than our target boroughs. We will filter the boroughs and replace the borough names to make it compatible with the crime dataset.
+
+```{r}
+# List unique values in the sub_region_2 column
+unique_values <- unique(nyc_data$sub_region_2)
+
+# Print the unique values
+print(unique_values)
+```
+
+```{r}
+selected_regions <- nyc_data %>%
+  filter(sub_region_2 %in% c("Bronx County", "Kings County", "Queens County", 
+                             "New York County", "Richmond County"))
+
+# Replace borough names
+selected_regions <- selected_regions %>%
+  mutate(sub_region_2 = case_when(
+    sub_region_2 == "Bronx County" ~ "BRONX",
+    sub_region_2 == "Kings County" ~ "BROOKLYN",
+    sub_region_2 == "Queens County" ~ "QUEENS",
+    sub_region_2 == "New York County" ~ "MANHATTAN",
+    sub_region_2 == "Richmond County" ~ "STATEN ISLAND",
+    TRUE ~ sub_region_2
+  ))
+
+head(selected_regions)
+```
+Next we test whether there are missing values in selected boroughs.
+
+```{r}
+na_count_parks_percent_change <- sum(is.na(selected_regions$parks_percent_change_from_baseline))
+
+print(na_count_parks_percent_change)
+```
+
+The result shows that the dataset is complete without missing values. Then we can draw the summarized bar chart based on selected boroughs.
+
+```{r}
+borough_summary <- selected_regions %>%
+    group_by(sub_region_2) %>%
+    summarize(Average_Metric = mean(parks_percent_change_from_baseline, na.rm = TRUE))
+
+# Visualization
+ggplot(borough_summary, aes(x = sub_region_2, y = Average_Metric, fill = sub_region_2)) +
+    geom_bar(stat = "identity") +
+    theme_minimal() +
+    labs(title = "Average Parks Percent Change from Baseline by Borough", 
+         x = "Borough", 
+         y = "Average Percent Change") +
+    theme(axis.text.x = element_text(angle = 90))
+```

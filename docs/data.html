@@ -182,6 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#crimes-data" id="toc-crimes-data" class="nav-link" data-scroll-target="#crimes-data"><span class="header-section-number">2.3.1</span> Crimes Data</a></li>
   <li><a href="#unemployment-rate-data" id="toc-unemployment-rate-data" class="nav-link" data-scroll-target="#unemployment-rate-data"><span class="header-section-number">2.3.2</span> Unemployment Rate Data</a></li>
+  <li><a href="#mobility-data" id="toc-mobility-data" class="nav-link" data-scroll-target="#mobility-data"><span class="header-section-number">2.3.3</span> Mobility Data</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -483,6 +484,169 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="mobility-data" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="mobility-data"><span class="header-section-number">2.3.3</span> Mobility Data</h3>
+<p>We examine the mobility dataset. We only focus on the feature: parks_percent_change_from_baseline.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.1.2</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1: Read the CSV file</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"~/Desktop/2022_US_Region_Mobility_Report.csv"</span>  <span class="co"># read data</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 747969 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (7): country_region_code, country_region, sub_region_1, sub_region_2, i...
+dbl  (6): retail_and_recreation_percent_change_from_baseline, grocery_and_ph...
+lgl  (1): metro_area
+date (1): date
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Filter for New York Data</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>nyc_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(data, sub_region_1 <span class="sc">==</span> <span class="st">"New York"</span>) <span class="co"># Replace 'region' with the correct column name</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Summarizing parks_percent_change_from_baseline by borough</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>borough_summary <span class="ot">&lt;-</span> nyc_data <span class="sc">%&gt;%</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sub_region_2) <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">Average_Metric =</span> <span class="fu">mean</span>(parks_percent_change_from_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Visualization</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(borough_summary, <span class="fu">aes</span>(<span class="at">x =</span> sub_region_2, <span class="at">y =</span> Average_Metric, <span class="at">fill =</span> sub_region_2)) <span class="sc">+</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Title"</span>, <span class="at">x =</span> <span class="st">"Borough"</span>, <span class="at">y =</span> <span class="st">"Metric"</span>) <span class="sc">+</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 30 rows containing missing values (`position_stack()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Noticing there are more boroughs than our target boroughs. We will filter the boroughs and replace the borough names to make it compatible with the crime dataset.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List unique values in the sub_region_2 column</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>unique_values <span class="ot">&lt;-</span> <span class="fu">unique</span>(nyc_data<span class="sc">$</span>sub_region_2)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the unique values</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] NA                    "Albany County"       "Allegany County"    
+ [4] "Bronx County"        "Broome County"       "Cattaraugus County" 
+ [7] "Cayuga County"       "Chautauqua County"   "Chemung County"     
+[10] "Chenango County"     "Clinton County"      "Columbia County"    
+[13] "Cortland County"     "Delaware County"     "Dutchess County"    
+[16] "Erie County"         "Essex County"        "Franklin County"    
+[19] "Fulton County"       "Genesee County"      "Greene County"      
+[22] "Herkimer County"     "Jefferson County"    "Kings County"       
+[25] "Lewis County"        "Livingston County"   "Madison County"     
+[28] "Monroe County"       "Montgomery County"   "Nassau County"      
+[31] "New York County"     "Niagara County"      "Oneida County"      
+[34] "Onondaga County"     "Ontario County"      "Orange County"      
+[37] "Orleans County"      "Oswego County"       "Otsego County"      
+[40] "Putnam County"       "Queens County"       "Rensselaer County"  
+[43] "Richmond County"     "Rockland County"     "Saratoga County"    
+[46] "Schenectady County"  "Schoharie County"    "Schuyler County"    
+[49] "Seneca County"       "St. Lawrence County" "Steuben County"     
+[52] "Suffolk County"      "Sullivan County"     "Tioga County"       
+[55] "Tompkins County"     "Ulster County"       "Warren County"      
+[58] "Washington County"   "Wayne County"        "Westchester County" 
+[61] "Wyoming County"      "Yates County"       </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>selected_regions <span class="ot">&lt;-</span> nyc_data <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sub_region_2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bronx County"</span>, <span class="st">"Kings County"</span>, <span class="st">"Queens County"</span>, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"New York County"</span>, <span class="st">"Richmond County"</span>))</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace borough names</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>selected_regions <span class="ot">&lt;-</span> selected_regions <span class="sc">%&gt;%</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sub_region_2 =</span> <span class="fu">case_when</span>(</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>    sub_region_2 <span class="sc">==</span> <span class="st">"Bronx County"</span> <span class="sc">~</span> <span class="st">"BRONX"</span>,</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>    sub_region_2 <span class="sc">==</span> <span class="st">"Kings County"</span> <span class="sc">~</span> <span class="st">"BROOKLYN"</span>,</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    sub_region_2 <span class="sc">==</span> <span class="st">"Queens County"</span> <span class="sc">~</span> <span class="st">"QUEENS"</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    sub_region_2 <span class="sc">==</span> <span class="st">"New York County"</span> <span class="sc">~</span> <span class="st">"MANHATTAN"</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    sub_region_2 <span class="sc">==</span> <span class="st">"Richmond County"</span> <span class="sc">~</span> <span class="st">"STATEN ISLAND"</span>,</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> sub_region_2</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(selected_regions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 15
+  country_region_code country_region sub_region_1 sub_region_2 metro_area
+  &lt;chr&gt;               &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;        &lt;lgl&gt;     
+1 US                  United States  New York     BRONX        NA        
+2 US                  United States  New York     BRONX        NA        
+3 US                  United States  New York     BRONX        NA        
+4 US                  United States  New York     BRONX        NA        
+5 US                  United States  New York     BRONX        NA        
+6 US                  United States  New York     BRONX        NA        
+# ℹ 10 more variables: iso_3166_2_code &lt;chr&gt;, census_fips_code &lt;chr&gt;,
+#   place_id &lt;chr&gt;, date &lt;date&gt;,
+#   retail_and_recreation_percent_change_from_baseline &lt;dbl&gt;,
+#   grocery_and_pharmacy_percent_change_from_baseline &lt;dbl&gt;,
+#   parks_percent_change_from_baseline &lt;dbl&gt;,
+#   transit_stations_percent_change_from_baseline &lt;dbl&gt;,
+#   workplaces_percent_change_from_baseline &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<p>Next we test whether there are missing values in selected boroughs.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>na_count_parks_percent_change <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(selected_regions<span class="sc">$</span>parks_percent_change_from_baseline))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(na_count_parks_percent_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+<p>The result shows that the dataset is complete without missing values. Then we can draw the summarized bar chart based on selected boroughs.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>borough_summary <span class="ot">&lt;-</span> selected_regions <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sub_region_2) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">Average_Metric =</span> <span class="fu">mean</span>(parks_percent_change_from_baseline, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(borough_summary, <span class="fu">aes</span>(<span class="at">x =</span> sub_region_2, <span class="at">y =</span> Average_Metric, <span class="at">fill =</span> sub_region_2)) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Average Parks Percent Change from Baseline by Borough"</span>, </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Borough"</span>, </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Average Percent Change"</span>) <span class="sc">+</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
