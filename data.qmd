@@ -79,7 +79,7 @@ borough_data = as.data.frame(borough_crime_totals)
 ggplot(borough_data, aes(x = BOROUGH, y = Total_Crimes, fill = BOROUGH)) +
     geom_bar(stat="identity") +
     theme_minimal() +
-    labs(title="NYC Park Crime Distribution by Borough", x="Borough", y="Total Crimes") +
+    labs(title="NYC Park Crime Distribution by Borough in 3Q23", x="Borough", y="Total Crimes") +
     theme(axis.text.x = element_text(angle = 90))
 ```
 
