@@ -8,7 +8,7 @@ First, we collected crime data in NYC from NYPD official websites focused on cri
 
 Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. We are downloading an excel file with all of the data from 2013-2023 onto our local drive and importing it into R. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.
 
-Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv). Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we will only be focusing on parks and NYC, if permitted to use this dataset.
+Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to October 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv). Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we will only be focusing on parks and NYC, if permitted to use this dataset. We will be importing this data directly from github for our analysis. The values provided show deviations from the baseline, which is set as the 5-week period Jan 3–Feb 6, 2020.
 
 ## Research Plan
 
@@ -128,56 +128,48 @@ ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
 We examine the mobility dataset. We only focus on the feature: parks_percent_change_from_baseline.
 
 ```{r}
-library(readr)
-library(dplyr)
-library(ggplot2)
+#import data
 
-# Step 1: Read the CSV file
-file_path <- "~/Desktop/2022_US_Region_Mobility_Report.csv"  # read data
-data <- read_csv(file_path)
+data = read.csv('https://raw.githubusercontent.com/ActiveConclusion/COVID19_mobility/master/google_reports/mobility_report_US.csv')
 
-# Step 2: Filter for New York Data
-nyc_data <- filter(data, sub_region_1 == "New York") # Replace 'region' with the correct column name
-
-# Step 3: Summarizing parks_percent_change_from_baseline by borough
-borough_summary <- nyc_data %>%
-    group_by(sub_region_2) %>%
-    summarize(Average_Metric = mean(parks_percent_change_from_baseline, na.rm = TRUE))
-
-# Step 4: Visualization
-ggplot(borough_summary, aes(x = sub_region_2, y = Average_Metric, fill = sub_region_2)) +
-    geom_bar(stat = "identity") +
-    theme_minimal() +
-    labs(title = "Title", x = "Borough", y = "Metric") +
-    theme(axis.text.x = element_text(angle = 90))
+# Step 2: Filter for New York Data and Parks
+nyc_data <- data %>%
+  filter(state == "New York") %>%
+  select(county, date, parks)
+head(nyc_data)
 ```
-Noticing there are more boroughs than our target boroughs. We will filter the boroughs and replace the borough names to make it compatible with the crime dataset.
+
+This data shows changes in park visit frequency relative to pre-pandemic levels. For example, in the table above, we can see that total New York park visits were down 2 points on February 15th 2020 and up 13 points on February 16th 2020.
 
 ```{r}
-# List unique values in the sub_region_2 column
-unique_values <- unique(nyc_data$sub_region_2)
+# Step 3: Visualization for total NY park frequency
+ny_summary = nyc_data %>%
+  filter(county == "Total")
+ny_summary$date = as.Date(ny_summary$date)
 
-# Print the unique values
-print(unique_values)
+ggplot(ny_summary, aes(x = date, y = parks, fill = parks)) +
+    geom_bar(stat = "identity") +
+    theme_minimal() +
+    labs(title = "NY State Park Frequency", x = "Date", y = "Indexed frequency levels compared to pre-pandemic") +
+    theme(axis.text.x = element_text(angle = 45))
 ```
+Since the Mobility data is defined by counties and our NYC crimes data is defined by borough, we can filter for counties that encompass in the 5 NYC boroughs. 
 
 ```{r}
 selected_regions <- nyc_data %>%
-  filter(sub_region_2 %in% c("Bronx County", "Kings County", "Queens County", 
+  filter(county %in% c("Bronx County", "Kings County", "Queens County", 
                              "New York County", "Richmond County"))
 
 # Replace borough names
 selected_regions <- selected_regions %>%
-  mutate(sub_region_2 = case_when(
-    sub_region_2 == "Bronx County" ~ "BRONX",
-    sub_region_2 == "Kings County" ~ "BROOKLYN",
-    sub_region_2 == "Queens County" ~ "QUEENS",
-    sub_region_2 == "New York County" ~ "MANHATTAN",
-    sub_region_2 == "Richmond County" ~ "STATEN ISLAND",
-    TRUE ~ sub_region_2
+  mutate(county = case_when(
+    county == "Bronx County" ~ "BRONX",
+    county == "Kings County" ~ "BROOKLYN",
+    county == "Queens County" ~ "QUEENS",
+    county == "New York County" ~ "MANHATTAN",
+    county == "Richmond County" ~ "STATEN ISLAND",
+    TRUE ~ county
   ))
-
-head(selected_regions)
 ```
 Next we test whether there are missing values in selected boroughs.
 
@@ -189,17 +181,30 @@ print(na_count_parks_percent_change)
 
 The result shows that the dataset is complete without missing values. Then we can draw the summarized bar chart based on selected boroughs.
 
-```{r}
-borough_summary <- selected_regions %>%
-    group_by(sub_region_2) %>%
-    summarize(Average_Metric = mean(parks_percent_change_from_baseline, na.rm = TRUE))
 
-# Visualization
-ggplot(borough_summary, aes(x = sub_region_2, y = Average_Metric, fill = sub_region_2)) +
-    geom_bar(stat = "identity") +
+```{r}
+library(scales)
+selected_regions$date = as.Date(selected_regions$date)
+ggplot(selected_regions, aes(fill=county, y=parks, x=date)) + 
+    geom_bar(position="stack", stat="identity") +
     theme_minimal() +
-    labs(title = "Average Parks Percent Change from Baseline by Borough", 
-         x = "Borough", 
-         y = "Average Percent Change") +
-    theme(axis.text.x = element_text(angle = 90))
+    labs(title = "NYC Park Frequency", x = "Date", y = "Indexed frequency levels compared to pre-pandemic") +
+    theme(axis.text.x = element_text(angle = 45)) +
+    scale_x_date(date_labels = "%b-%d-%Y")
 ```
+
+Since the data is tough to read in detail, we can summarize it by each month of data collected
+
+```{r}
+selected_regions$date = as.Date(selected_regions$date)
+monthly_values = selected_regions %>% 
+    group_by(month = lubridate::floor_date(date, 'month'), county) %>%
+    summarize(sum = sum(parks))
+
+ggplot(monthly_values, aes(fill=county, y=sum, x=month)) + 
+    geom_bar(position="stack", stat="identity") +
+    theme_minimal() +
+    labs(title = "NYC Park Frequency by Month", x = "Date", y = "Indexed frequency levels compared to pre-pandemic") +
+    theme(axis.text.x = element_text(angle = 45))
+```
+
