@@ -30,7 +30,7 @@ First, we examine the crimes datasets. We will begin by first pulling data for 3
 
 ```{r}
 library(readxl)
-nyc_park_crime_stats_q3_2023 <- read_excel("~/Desktop/nyc-park-crime-stats-q3-2023.xlsx") #read data
+nyc_park_crime_stats_q3_2023 <- read_excel("~/Desktop/crime_data/nyc-park-crime-stats-q3-2023.xlsx") #read data
 
 # show part of data
 head(nyc_park_crime_stats_q3_2023)

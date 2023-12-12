@@ -1,1 +1,151 @@
 # Results
+
+
+## NYC Park Total Crimes by Borough
+
+We first get an idea of the total crime distribution in NYC boroughs.
+
+```{r}
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(lubridate)
+```
+
+```{r}
+# Initializes an empty data frame to store data for all quarters
+all_data <- data.frame()
+
+for (year in 2015:2023) {
+    for (quarter in 1:4) {
+        # Skip Q4 2023
+        if (year == 2023 && quarter == 4) {
+            next
+        }
+
+        file_path <- sprintf("~/Desktop/crime_data/nyc-park-crime-stats-q%d-%d.xlsx", quarter, year)
+
+        temp_data <- read_excel(file_path, skip = 2)  # 跳过前两行
+
+        # Uniform column name
+        colnames(temp_data) <- c("PARK", "BOROUGH", "SIZE_ACRES", "CATEGORY", "MURDER", "RAPE", "ROBBERY", "FELONY_ASSAULT", "BURGLARY", "GRAND_LARCENY", "GRAND_LARCENY_MV", "TOTAL")
+
+        # Add a time period column
+        temp_data$Time_Period <- sprintf("%d Q%d", year, quarter)
+
+        # Merge into the master data framework
+        all_data <- rbind(all_data, temp_data)
+        
+        all_data <- all_data[all_data$BOROUGH != "BOROUGH", ]
+        
+        all_data <- all_data[all_data$BOROUGH != "BROOKLYN/QUEENS", ]
+    }
+}
+```
+
+```{r}
+# Calculate the total number of crimes for each quarter and borough
+crime_stats <- all_data %>%
+  filter(!is.na(BOROUGH)) %>%  # Exclude the rows where BOROUGH shows NA
+  group_by(Time_Period, BOROUGH) %>%
+  summarize(Total_Crimes = sum(as.numeric(TOTAL), na.rm = TRUE))
+```
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
+custom_colors <- c("orange", "skyblue","pink", "#4DAF4A", "purple")
+
+# draw time series plot
+ggplot(crime_stats, aes(x = Time_Period, y = Total_Crimes, fill = BOROUGH)) +
+    geom_bar(stat="identity", position = position_dodge()) +
+    theme_minimal() +
+    scale_fill_manual(values = custom_colors) +  
+    labs(title="NYC Park Crime Trends by Borough", x="Time Period", y="Total Crimes") +
+    theme(axis.text.x = element_text(angle = 90))
+```
+
+This plot shows trends of total crimes by borough in different NYC boroughs. The crime data is from 2015 Spring to 2023 Autumn. 
+
+Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races..). 
+
+We also notice that crimes happen more in Q3 (the third quarter) each year. There are increasing trends from 2015 to 2019 and plummets from 2020 to 2021. The cause may be the pandemic, when lockdown and disease happened more often.
+
+## Trends in Total Crimes by Borough
+
+To see the trends more clearly for boroughs, we draw separate bar charts with LOESS smoothing lines to illustrate the trends.
+
+```{r}
+# Function: Converts a string in the format "2019 Q1" to a date
+convert_to_date <- function(time_period) {
+  parts <- strsplit(time_period, " ")[[1]]
+  year <- parts[1]
+  quarter <- substr(parts[2], 2, 2)
+
+  month <- match(quarter, c("1", "2", "3", "4")) * 3 - 2
+  as.Date(paste(year, sprintf("%02d", month), "01", sep = "-"))
+}
+
+crime_stats$Time_Period <- sapply(crime_stats$Time_Period, convert_to_date)
+```
+
+```{r}
+# Plot the time series for each borough and add a LOESS smoothing line
+boroughs <- unique(crime_stats$BOROUGH)
+
+for (borough in boroughs) {
+  borough_data <- filter(crime_stats, BOROUGH == borough)
+  
+  p <- ggplot(borough_data, aes(x = Time_Period, y = Total_Crimes)) +
+    geom_bar(stat = "identity", position = position_dodge(), aes(fill = BOROUGH)) +
+    geom_smooth(method = "loess", se = FALSE, linetype = 'solid', size = 1, color = "black") +
+    scale_fill_manual(values = custom_colors) +
+    theme_minimal() +
+    labs(title = paste("NYC Park Crime Trends in", borough),
+         x = "Time Period",
+         y = "Total Crimes") +
+    theme(axis.text.x = element_text(angle = 90))
+  
+  print(p)
+}
+```
+The general trends for BROOKLYN, MANHATTAN, QUEENS and STATEN ISLAND are similar. They all show an increasing trend from 2015 to 2019, and then crime numbers dropped during the pandemic. In the end, crime data again increase, with a tendency to surpass the previous crime records. However, it's different for BRONX. The crimes start decreasing before the pandemic, and then decline gradually and slowly. This trend in BRONX is clear in this plot, but not apparent in the previous section.
+
+
+## NYC Park Crime Trends by Crime Categories
+
+Here we look into crime details for different boroughs. We focus on the crime categories.
+
+```{r}
+long_data <- all_data %>%
+  pivot_longer(
+    cols = c("MURDER", "RAPE", "ROBBERY", "FELONY_ASSAULT", "BURGLARY", "GRAND_LARCENY", "GRAND_LARCENY_MV"),
+    names_to = "CRIME_TYPE",
+    values_to = "CRIME_COUNT"
+  )
+
+crime_type_stats <- long_data %>%
+  filter(!is.na(BOROUGH)) %>%
+  group_by(Time_Period, BOROUGH, CRIME_TYPE) %>%
+  summarize(Total_Crimes = sum(as.numeric(CRIME_COUNT), na.rm = TRUE))
+
+
+# Generate a line chart for each borough
+boroughs <- unique(crime_type_stats$BOROUGH)
+
+for (borough in boroughs) {
+  borough_data <- filter(crime_type_stats, BOROUGH == borough)
+  
+  p <- ggplot(borough_data, aes(x = Time_Period, y = Total_Crimes, color = CRIME_TYPE, group = CRIME_TYPE)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = paste("NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+  
+  print(p)
+}
+```
+Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.
+
+We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.
+
+These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.
+
