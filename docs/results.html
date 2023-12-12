@@ -181,6 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#trends-in-total-crimes" id="toc-trends-in-total-crimes" class="nav-link" data-scroll-target="#trends-in-total-crimes"><span class="header-section-number">3.3</span> Trends in Total Crimes</a></li>
   <li><a href="#nyc-park-crime-by-crime-categories" id="toc-nyc-park-crime-by-crime-categories" class="nav-link" data-scroll-target="#nyc-park-crime-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime by Crime Categories</a></li>
   <li><a href="#relationships-between-park-sizes-and-crimes" id="toc-relationships-between-park-sizes-and-crimes" class="nav-link" data-scroll-target="#relationships-between-park-sizes-and-crimes"><span class="header-section-number">3.5</span> Relationships between Park Sizes and Crimes</a></li>
+  <li><a href="#link-between-unemployment-and-nyc-park-crime" id="toc-link-between-unemployment-and-nyc-park-crime" class="nav-link" data-scroll-target="#link-between-unemployment-and-nyc-park-crime"><span class="header-section-number">3.6</span> Link Between Unemployment and NYC Park Crime</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -609,6 +610,41 @@ using the `.groups` argument.</code></pre>
 </div>
 <p>There’s a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, There is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.</p>
 <p>Crime data have different distributions based on boroughs. It’s noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.</p>
+</section>
+<section id="link-between-unemployment-and-nyc-park-crime" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="link-between-unemployment-and-nyc-park-crime"><span class="header-section-number">3.6</span> Link Between Unemployment and NYC Park Crime</h2>
+<p>It is commonly assumed that higher unemployment leads to higher crime rates. There are some reasons. For example, unemployment can lead to financial hardship, increasing the likelihood of engaging in criminal activities as a means of survival or income generation. With more people unemployed, there is a higher likelihood that some individuals will turn to crime, given the increased opportunities and time available.</p>
+<p>However, there exist other relationships. For example, the level of unemployment is expected to be negatively associated with fluctuations in crime rates. It might suggest that the factors leading to changes in unemployment rates (such as economic conditions, policy changes, or labor market dynamics) could also be influencing crime rates in the opposite direction. In a booming economy, unemployment might decrease, but the increased activity and wealth might lead to more opportunities for certain types of crime (like theft or fraud). It could also imply that the relationship between unemployment and crime is not straightforward or direct and might be influenced by other mediating factors.</p>
+<p>We will investigate the link between unemlpoyment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>) <span class="co"># Read data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># Calculate average</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(unemployment_rate, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Nov"</span>, <span class="st">"Dec"</span>)) <span class="co"># Remove missing values</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>unemployment_long <span class="ot">&lt;-</span> unemployment_rate <span class="sc">%&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Jan<span class="sc">:</span>Dec, <span class="at">names_to =</span> <span class="st">"Month"</span>, <span class="at">values_to =</span> <span class="st">"UnemploymentRate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">match</span>(Month, month.abb))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(unemployment_long, <span class="fu">aes</span>(<span class="at">x =</span> Year <span class="sc">+</span> (Month<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">y =</span> UnemploymentRate)) <span class="sc">+</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> <span class="co"># Added missing +</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(unemployment_long<span class="sc">$</span>Year)) <span class="sc">+</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly Unemployment Rate Over Years"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.</p>
+<p>it’s worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor.</p>
 
 
 </section>

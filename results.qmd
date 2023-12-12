@@ -236,6 +236,37 @@ There's a dense cluster of points near the origin, indicating that smaller parks
 
 Crime data have different distributions based on boroughs. It's noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.
 
+## Link Between Unemployment and NYC Park Crime
+
+It is commonly assumed that higher unemployment leads to higher crime rates. There are some reasons. For example, unemployment can lead to financial hardship, increasing the likelihood of engaging in criminal activities as a means of survival or income generation. With more people unemployed, there is a higher likelihood that some individuals will turn to crime, given the increased opportunities and time available. 
+
+However, there exist other relationships. For example, the level of unemployment is expected to be negatively associated with fluctuations in crime rates. It might suggest that the factors leading to changes in unemployment rates (such as economic conditions, policy changes, or labor market dynamics) could also be influencing crime rates in the opposite direction. In a booming economy, unemployment might decrease, but the increased activity and wealth might lead to more opportunities for certain types of crime (like theft or fraud). It could also imply that the relationship between unemployment and crime is not straightforward or direct and might be influenced by other mediating factors. 
+
+We will investigate the link between unemlpoyment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.
+
+```{r}
+unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx") # Read data
+unemployment_rate$Avg <- rowMeans(unemployment_rate[, 2:13], na.rm = TRUE) # Calculate average
+unemployment_rate <- na.omit(unemployment_rate, cols = c("Nov", "Dec")) # Remove missing values
+unemployment_long <- unemployment_rate %>%
+  pivot_longer(cols = Jan:Dec, names_to = "Month", values_to = "UnemploymentRate") %>%
+  mutate(Month = match(Month, month.abb))
+
+# Plotting
+ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
+  geom_line() +
+  geom_smooth() + # Added missing +
+  scale_x_continuous(breaks = unique(unemployment_long$Year)) +
+  labs(title = "Monthly Unemployment Rate Over Years",
+       x = "Year",
+       y = "Unemployment Rate (%)") +
+  theme_minimal()
+
+```
+
+It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.
+
+it's worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor. 
 
 
 
