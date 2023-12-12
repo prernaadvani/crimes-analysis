@@ -178,8 +178,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#nyc-park-total-crimes-by-borough" id="toc-nyc-park-total-crimes-by-borough" class="nav-link active" data-scroll-target="#nyc-park-total-crimes-by-borough"><span class="header-section-number">3.1</span> NYC Park Total Crimes by Borough</a></li>
   <li><a href="#heatmap-of-total-crimes" id="toc-heatmap-of-total-crimes" class="nav-link" data-scroll-target="#heatmap-of-total-crimes"><span class="header-section-number">3.2</span> Heatmap of Total Crimes</a></li>
-  <li><a href="#trends-in-total-crimes-by-borough" id="toc-trends-in-total-crimes-by-borough" class="nav-link" data-scroll-target="#trends-in-total-crimes-by-borough"><span class="header-section-number">3.3</span> Trends in Total Crimes by Borough</a></li>
-  <li><a href="#nyc-park-crime-trends-by-crime-categories" id="toc-nyc-park-crime-trends-by-crime-categories" class="nav-link" data-scroll-target="#nyc-park-crime-trends-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime Trends by Crime Categories</a></li>
+  <li><a href="#trends-in-total-crimes" id="toc-trends-in-total-crimes" class="nav-link" data-scroll-target="#trends-in-total-crimes"><span class="header-section-number">3.3</span> Trends in Total Crimes</a></li>
+  <li><a href="#nyc-park-crime-by-crime-categories" id="toc-nyc-park-crime-by-crime-categories" class="nav-link" data-scroll-target="#nyc-park-crime-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime by Crime Categories</a></li>
   <li><a href="#relationships-between-park-sizes-and-crimes" id="toc-relationships-between-park-sizes-and-crimes" class="nav-link" data-scroll-target="#relationships-between-park-sizes-and-crimes"><span class="header-section-number">3.5</span> Relationships between Park Sizes and Crimes</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -392,8 +392,8 @@ New names:
 <p>Some years stand out with overall higher crime rates across all boroughs, including 2017, 2018, 2019 and 2022. This could be indicative of broader societal factors affecting crime rates, such as economic downturns or changes in policing policy.</p>
 <p>The intensity of colors varies across boroughs, indicating that some areas consistently experience higher crime rates than others. For example, MANHATTAN and BROOKLYN show more intense colors compared to STATEN ISLAND. Although STATEN ISLAND reports few crimes, we can still see light strips in the heatmap which indicate seasonal trends of crimes. This is hard to capture in the previous bar chart.</p>
 </section>
-<section id="trends-in-total-crimes-by-borough" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="trends-in-total-crimes-by-borough"><span class="header-section-number">3.3</span> Trends in Total Crimes by Borough</h2>
+<section id="trends-in-total-crimes" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="trends-in-total-crimes"><span class="header-section-number">3.3</span> Trends in Total Crimes</h2>
 <p>To see the trends more clearly for boroughs, we draw separate bar charts with LOESS smoothing lines to illustrate the trends.</p>
 <div class="cell">
 <details>
@@ -470,8 +470,8 @@ New names:
 </div>
 <p>The general trends for BROOKLYN, MANHATTAN, QUEENS and STATEN ISLAND are similar. They all show an increasing trend from 2015 to 2019, and then crime numbers dropped during the pandemic. In the end, crime data again increase, with a tendency to surpass the previous crime records. However, it’s different for BRONX. The crimes start decreasing before the pandemic, and then decline gradually and slowly. This trend in BRONX is clear in this plot, but not apparent in the previous section.</p>
 </section>
-<section id="nyc-park-crime-trends-by-crime-categories" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="nyc-park-crime-trends-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime Trends by Crime Categories</h2>
+<section id="nyc-park-crime-by-crime-categories" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="nyc-park-crime-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime by Crime Categories</h2>
 <p>Here we look into crime details for different boroughs. We focus on the crime categories.</p>
 <div class="cell">
 <details>
