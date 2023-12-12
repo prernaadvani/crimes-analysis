@@ -26,7 +26,7 @@ for (year in 2015:2023) {
 
         file_path <- sprintf("~/Desktop/crime_data/nyc-park-crime-stats-q%d-%d.xlsx", quarter, year)
 
-        temp_data <- read_excel(file_path, skip = 2)  # 跳过前两行
+        temp_data <- read_excel(file_path, skip = 2)  
 
         # Uniform column name
         colnames(temp_data) <- c("PARK", "BOROUGH", "SIZE_ACRES", "CATEGORY", "MURDER", "RAPE", "ROBBERY", "FELONY_ASSAULT", "BURGLARY", "GRAND_LARCENY", "GRAND_LARCENY_MV", "TOTAL")
@@ -68,6 +68,27 @@ This plot shows trends of total crimes by borough in different NYC boroughs. The
 Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races..). 
 
 We also notice that crimes happen more in Q3 (the third quarter) each year. There are increasing trends from 2015 to 2019 and plummets from 2020 to 2021. The cause may be the pandemic, when lockdown and disease happened more often.
+
+## Heatmap of Total Crimes
+
+Heatmap based on quarters and boroughs shows directly the seasonal patterns and densities of crimes.
+
+```{r}
+ggplot(crime_stats, aes(x = Time_Period, y = BOROUGH, fill = Total_Crimes)) +
+  geom_tile() +
+  scale_fill_gradient(low = "lightblue", high = "red") +
+  theme_minimal() +
+  labs(title = "NYC Park Crime Heatmap by Borough and Year",
+       x = "Year",
+       y = "Borough",
+       fill = "Total Crimes") +
+  theme(axis.text.x = element_text(angle = 90))
+```
+There appears to be a recurring pattern within each year, suggesting a seasonal trend in crime numbers. For instance, the third quarters consistently show higher crime rates across multiple years. This may result from the weather and temperature. It seems crimes seldom take place in winter, but more in autumn.
+
+Some years stand out with overall higher crime rates across all boroughs, including 2017, 2018, 2019 and 2022. This could be indicative of broader societal factors affecting crime rates, such as economic downturns or changes in policing policy.
+
+The intensity of colors varies across boroughs, indicating that some areas consistently experience higher crime rates than others. For example, MANHATTAN and BROOKLYN show more intense colors compared to STATEN ISLAND. Although STATEN ISLAND reports few crimes, we can still see light strips in the heatmap which indicate seasonal trends of crimes. This is hard to capture in the previous bar chart.
 
 ## Trends in Total Crimes by Borough
 
@@ -148,4 +169,73 @@ Generally, robbery, felony assault and grand larceny are three common crime cate
 We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.
 
 These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.
+
+
+## Relationships between Park Sizes and Crimes
+
+```{r}
+all_data$TOTAL <- as.numeric(all_data$TOTAL)
+
+# Create a summary data frame
+park_crime_stats <- all_data %>%
+  filter(!is.na(BOROUGH)) %>%
+  group_by(PARK, BOROUGH) %>%
+  summarize(
+    Total_Crimes = sum(TOTAL, na.rm = TRUE),
+    Park_Size = mean(as.numeric(SIZE_ACRES), na.rm = TRUE) 
+  ) %>%
+  ungroup() 
+```
+
+```{r}
+# Create the scatterplot
+ggplot(park_crime_stats, aes(x = Park_Size, y = Total_Crimes, color = BOROUGH)) +
+  geom_point() +
+  #scale_x_log10() +  # Logarithmic scale for park size
+  theme_minimal() +
+  labs(
+    title = "Relationship between Park Size, Crime, and Borough",
+    x = "Park Size (Acres, log scale)",
+    y = "Total Crimes",
+    color = "Borough"
+  ) +
+  theme(legend.position = "bottom")
+```
+Outliers make this plot unclear. The majority of data points stack together. We will remove the outliers.
+
+```{r}
+# Coomputer IQR
+iqr_stats <- park_crime_stats %>%
+  summarize(
+    Q1 = quantile(Total_Crimes, 0.25, na.rm = TRUE),
+    Q3 = quantile(Total_Crimes, 0.75, na.rm = TRUE)
+  ) %>%
+  mutate(IQR = Q3 - Q1)
+
+# Define ranges for outliers
+lower_bound <- iqr_stats$Q1 - 1.5 * iqr_stats$IQR
+upper_bound <- iqr_stats$Q3 + 1.5 * iqr_stats$IQR
+
+# Filter out outliers
+park_crime_stats_filtered <- park_crime_stats %>%
+  filter(Total_Crimes >= lower_bound & Total_Crimes <= upper_bound)
+
+# Create the scatterplot again
+ggplot(park_crime_stats_filtered, aes(x = Park_Size, y = Total_Crimes, color = BOROUGH)) +
+  geom_point() +
+  theme_minimal() +
+  labs(
+    title = "Relationship between Park Size, Crime, and Borough (Outliers Removed)",
+    x = "Park Size (Acres)",
+    y = "Total Crimes",
+    color = "Borough"
+  ) +
+  theme(legend.position = "bottom")
+```
+There's a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, There is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.
+
+Crime data have different distributions based on boroughs. It's noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.
+
+
+
 
