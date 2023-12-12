@@ -166,6 +166,8 @@ for (borough in boroughs) {
 ```
 Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.
 
+Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quaters.
+
 We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.
 
 These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.
@@ -268,5 +270,37 @@ It is obvious that the unemployment rate decreases from 2013 to 2018, increases 
 
 it's worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor. 
 
+We further look at the two most possible and common crime types that may be related to the negative association with unemployment rates.
+```{r}
+long_data_sub <- all_data %>%
+  pivot_longer(
+    cols = c("ROBBERY", "GRAND_LARCENY"),
+    names_to = "CRIME_TYPE",
+    values_to = "CRIME_COUNT"
+  )
+
+crime_sub_stats <- long_data_sub %>%
+  filter(!is.na(BOROUGH)) %>%
+  group_by(Time_Period, BOROUGH, CRIME_TYPE) %>%
+  summarize(Total_Crimes = sum(as.numeric(CRIME_COUNT), na.rm = TRUE))
+
+
+# Generate a line chart for each borough
+boroughs <- unique(crime_sub_stats$BOROUGH)
+
+for (borough in boroughs) {
+  borough_data <- filter(crime_sub_stats, BOROUGH == borough)
+  
+  p <- ggplot(borough_data, aes(x = Time_Period, y = Total_Crimes, color = CRIME_TYPE, group = CRIME_TYPE)) +
+    geom_line() +
+    geom_smooth()+
+    theme_minimal() +
+    labs(title = paste("NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+  
+  print(p)
+}
+```
+Data is sparse for STATEN ISLAND, therefore we can ignore the trend lines for STATEN ISLAND. For other crime types, the trend lines are basically consistent with the overall crime patterns except robbery in MANHATTAN. This negative relationship with unemployment rate indicate no direct connections or there are other more important factors that are not taken into account here.
 
 

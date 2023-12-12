@@ -527,6 +527,7 @@ using the `.groups` argument.</code></pre>
 </div>
 </div>
 <p>Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.</p>
+<p>Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quaters.</p>
 <p>We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.</p>
 <p>These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.</p>
 </section>
@@ -645,6 +646,76 @@ using the `.groups` argument.</code></pre>
 </div>
 <p>It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.</p>
 <p>it’s worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor.</p>
+<p>We further look at the two most possible and common crime types that may be related to the negative association with unemployment rates.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>long_data_sub <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"ROBBERY"</span>, <span class="st">"GRAND_LARCENY"</span>),</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"CRIME_TYPE"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"CRIME_COUNT"</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>crime_sub_stats <span class="ot">&lt;-</span> long_data_sub <span class="sc">%&gt;%</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH, CRIME_TYPE) <span class="sc">%&gt;%</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(CRIME_COUNT), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'Time_Period', 'BOROUGH'. You can override
+using the `.groups` argument.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a line chart for each borough</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_sub_stats<span class="sc">$</span>BOROUGH)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_sub_stats, BOROUGH <span class="sc">==</span> borough)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> CRIME_TYPE, <span class="at">group =</span> CRIME_TYPE)) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Data is sparse for STATEN ISLAND, therefore we can ignore the trend lines for STATEN ISLAND. For other crime types, the trend lines are basically consistent with the overall crime patterns except robbery in MANHATTAN. This negative relationship with unemployment rate indicate no direct connections or there are other more important factors that are not taken into account here.</p>
 
 
 </section>
