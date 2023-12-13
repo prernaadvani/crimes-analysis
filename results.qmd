@@ -17,6 +17,8 @@ library(lubridate)
 # Initializes an empty data frame to store data for all quarters
 all_data <- data.frame()
 
+#from our downloaded files, we import all the data and merge into one file
+
 for (year in 2015:2023) {
     for (quarter in 1:4) {
         # Skip Q4 2023
@@ -42,21 +44,25 @@ for (year in 2015:2023) {
         all_data <- all_data[all_data$BOROUGH != "BROOKLYN/QUEENS", ]
     }
 }
+
 ```
+
 
 ```{r}
 # Calculate the total number of crimes for each quarter and borough
 crime_stats <- all_data %>%
   filter(!is.na(BOROUGH)) %>%  # Exclude the rows where BOROUGH shows NA
-  group_by(Time_Period, BOROUGH) %>%
-  summarize(Total_Crimes = sum(as.numeric(TOTAL), na.rm = TRUE))
+    group_by(Time_Period, BOROUGH) %>%
+    summarize(Total_Crimes = sum(as.numeric(TOTAL), na.rm = TRUE))
 ```
+
+
 ```{r fig.width=11, fig.height=6.5, out.width='100%'}
 custom_colors <- c("orange", "skyblue","pink", "#4DAF4A", "purple")
 
 # draw time series plot
 ggplot(crime_stats, aes(x = Time_Period, y = Total_Crimes, fill = BOROUGH)) +
-    geom_bar(stat="identity", position = position_dodge()) +
+    geom_bar(position="stack", stat="identity") +
     theme_minimal() +
     scale_fill_manual(values = custom_colors) +  
     labs(title="NYC Park Crime Trends by Borough", x="Time Period", y="Total Crimes") +
@@ -106,9 +112,10 @@ convert_to_date <- function(time_period) {
 }
 
 crime_stats$Time_Period <- sapply(crime_stats$Time_Period, convert_to_date)
+crime_stats$Time_Period <- as.Date(crime_stats$Time_Period)
 ```
 
-```{r}
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
 # Plot the time series for each borough and add a LOESS smoothing line
 boroughs <- unique(crime_stats$BOROUGH)
 
@@ -123,7 +130,7 @@ for (borough in boroughs) {
     labs(title = paste("NYC Park Crime Trends in", borough),
          x = "Time Period",
          y = "Total Crimes") +
-    theme(axis.text.x = element_text(angle = 90))
+    theme(axis.text.x = element_text(angle = 90)) 
   
   print(p)
 }
@@ -135,7 +142,7 @@ The general trends for BROOKLYN, MANHATTAN, QUEENS and STATEN ISLAND are similar
 
 Here we look into crime details for different boroughs. We focus on the crime categories.
 
-```{r}
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
 long_data <- all_data %>%
   pivot_longer(
     cols = c("MURDER", "RAPE", "ROBBERY", "FELONY_ASSAULT", "BURGLARY", "GRAND_LARCENY", "GRAND_LARCENY_MV"),
@@ -164,6 +171,8 @@ for (borough in boroughs) {
   print(p)
 }
 ```
+
+
 Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.
 
 Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quaters.
@@ -234,7 +243,7 @@ ggplot(park_crime_stats_filtered, aes(x = Park_Size, y = Total_Crimes, color = B
   ) +
   theme(legend.position = "bottom")
 ```
-There's a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, There is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.
+There's a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, there is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.
 
 Crime data have different distributions based on boroughs. It's noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.
 
@@ -266,12 +275,13 @@ ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
 
 ```
 
-It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.
+It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2018 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.
 
 it's worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor. 
 
 We further look at the two most possible and common crime types that may be related to the negative association with unemployment rates.
-```{r}
+
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
 long_data_sub <- all_data %>%
   pivot_longer(
     cols = c("ROBBERY", "GRAND_LARCENY"),
@@ -301,6 +311,151 @@ for (borough in boroughs) {
   print(p)
 }
 ```
-Data is sparse for STATEN ISLAND, therefore we can ignore the trend lines for STATEN ISLAND. For other crime types, the trend lines are basically consistent with the overall crime patterns except robbery in MANHATTAN. This negative relationship with unemployment rate indicate no direct connections or there are other more important factors that are not taken into account here.
+
+If data was correlated with unemployement rates, we would expect the rate of each type of crime to follow a similar trajectory to unemployment: decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. However, the data above shows the opposite of this trend. The general trend in crime rates across boroughs is that it increases slowly from 2015-2018, declines slowly from 2018-2022, and then begins to increase until the most recent quarter. This negative relationship with unemployment rate indicates that there is less crime when unemployment rates are higher, though there are likely other factors at play here that we have not accounted for.
+
+We note grand larceny in STATEN ISLAND does not follow this general trend as it increases from 2015-2019, decreases from 2019-2021, and then increases from 2021-2023. However, we note that data is sparse for STATEN ISLAND as the range for total number of grand larceny crimes documented is between 0-2 during the entire time period. We also note that trend lines for robbery in MANHATTAN do not follow this pattern as it stays largely flat throughout the time period analyzed. 
+
+## Google Mobility Analysis
+
+We can do a closer analysis of park visits data during the pandemic period using Google Mobility data. This analysis will be completed from February 2020 until February 2022.
+
+```{r}
+#import Google Data and clean
+
+data = read.csv('https://raw.githubusercontent.com/ActiveConclusion/COVID19_mobility/master/google_reports/mobility_report_US.csv')
+
+# Step 2: Filter for New York Data and Parks
+nyc_data <- data %>%
+  filter(state == "New York") %>%
+  select(county, date, parks)
+
+selected_regions <- nyc_data %>%
+  filter(county %in% c("Bronx County", "Kings County", "Queens County", 
+                             "New York County", "Richmond County"))
+
+# Replace borough names
+selected_regions <- selected_regions %>%
+  mutate(county = case_when(
+    county == "Bronx County" ~ "BRONX",
+    county == "Kings County" ~ "BROOKLYN",
+    county == "Queens County" ~ "QUEENS",
+    county == "New York County" ~ "MANHATTAN",
+    county == "Richmond County" ~ "STATEN ISLAND",
+    TRUE ~ county
+  ))
+
+selected_regions$date = as.Date(selected_regions$date)
+```
+
+```{r}
+#Plotting of graph
+
+ggplot(selected_regions, aes(x = date, y = parks, color = county)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+```
+
+In the graph above, we can see lots of fluctuations, which may be because park visitation increases on the weekends. To view a more consistent set of data, we can create a 7-day moving average so that the fluctuations are absorbed into the average of 7 days. For example, the value for park visits on February 7th will be average of the values from February 1-7.
+
+```{r}
+library(zoo)
+selected_regions2 = transform(selected_regions, avg7 = rollmeanr(parks, 7, fill = NA))
+
+ggplot(selected_regions2, aes(x = date, y = avg7, color = county)) +
+    geom_line() +
+    theme_minimal() +
+    labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+```
+
+The first date of data is now Febuary 21 2020 instead of February 15 2020 since we are calculating a 7 day average. This means that our values no longer start at the indexed value = 0, which represents February 15 2020. In the graph above, we see that all counties generally follow the same trajectory: park visits increased steadily through the summer of 2020, and then decreased beginning in October 2020 through winter before picking back up in March 2021 for the summer and decreasing one last time starting in around September 2021 through February 2022. This aligns will more pleasant weather patterns to be outside. 
+
+```{r}
+#closer analysis of each county
+
+ggplot(selected_regions2, aes(x = date, y = avg7, color = county)) +
+    geom_line() +
+    theme_minimal() +
+    facet_grid(~county) +
+    labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+
+```
+From the graphs above, we can see that Queens saw the greatest increase in park visits compared to the other boroughs. At it's peak around July 2020, park visits were more than 150% higher than the pre-pandemic levels in January 2020. Park visits in Queens peaked again during the following summer around July 2021 at ~120% higher than pre-pandemic levels. On the contrary, Manhattan saw the smallest increase in park visits (at its peak in February 2020, it was ~12.5% higher than pre=pandemic) and it also represents the borough with the lowest overall decline in park visits (at it's trough in March 2020, it was ~70% below pre-pandemic levels). The Bronx and Staten Island had similar park frequency estimates, with peaks around 25-50% higher than pre-pandemic and lows around 50% below pre-pandemic, around the same times. 
+
+Given these trends, we can use the NYC crimes data to see if this correlated with the number of parks in each borough - if correlated, we would expect to see that boroughs with more parks utilized them more frequently during the pandemic period. It would follow that Queens should have the most number of parks and Manhattan should have the fewest.
+
+```{r}
+number_of_parks <- all_data %>%
+  select(PARK, BOROUGH) %>%
+  distinct() %>%
+  group_by(BOROUGH) %>%
+  tally(n = "parks")
+
+#to order from high to low
+number_of_parks <- number_of_parks %>% arrange(-parks)
+number_of_parks$BOROUGH <- as.vector(number_of_parks$BOROUGH) 
+number_of_parks$BOROUGH = factor(number_of_parks$BOROUGH,number_of_parks$BOROUGH) 
+
+ggplot(na.omit(number_of_parks), aes(x = BOROUGH, y = parks, fill = BOROUGH)) +
+    geom_col() +
+    theme_classic() +
+    labs(title = "Number of Parks by Borough", x = "Borough", y = "Number of Parks") 
+```
+
+Based on the graph above, we can see that Brooklyn clearly has the most number of parks and Staten Island has the fewest, which means that there likely is no correlation between the visits to parks and the number of parks in the borough. However, since the visits are relative to pre-pandemic levels, it could also be the case that Brooklyn parks were heavily visited in the pre-pandemic periods such that there was not too much of an increase during the pandemic. Based on the number of parks above, we can also infer that the Bronx and Staten Island had similar increases and decreases in park visits even though Staten Island has far fewer parks than the Bronx, which means that parks in Staten Island were being more utilized. 
+
+Finally, we can compare our time series of park visit data to see if it correlated with crimes data. We can create trend lines in our Mobility data to see if they match crime rates.
+
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
+#data with trend lines for Mobility Data
+boroughs <- unique(selected_regions2$county)
+
+for (borough in boroughs) {
+  borough_data <- filter(selected_regions2, county == borough)
+  
+  p <- ggplot(borough_data, aes(x = date, y = avg7)) +
+    geom_line() +
+    geom_smooth()+
+    theme_minimal() +
+    labs(title = paste("Indexed Park Mobility Data In", borough), x = "Date", y = "Mobility Relative to Pre-Pandemic") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+  
+  print(p)
+}
+
+
+```
+From the graphs above for park visits, we can see that visits increase from around February 2020 to August 2020, decrease from July 2020 to February 2021, increase from February 2021 to around July 2021, and then decrease again to February 2022. The only exception is Manhattan, which shows a mild decline from February 2020 to February 2021, and then follows the same trend as the rest of the boroughs.
+
+If this data is correlated with park crime data, we can expect to see similar trends in increases and decreases in crimes.
+
+
+```{r fig.width=11, fig.height=6.5, out.width='100%'}
+# Filter data and generate a line chart for each borough
+boroughs <- unique(crime_type_stats$BOROUGH)
+
+crimes_subset = crime_stats %>%
+  filter(Time_Period > '2020-02-01' & Time_Period < '2022-02-01')
+
+for (borough in boroughs) {
+  borough_data <- filter(crimes_subset, BOROUGH == borough)
+  
+  p <- ggplot(borough_data, aes(x = Time_Period, y = Total_Crimes)) +
+    geom_line() +
+    geom_smooth()+
+    theme_minimal() +
+    labs(title = paste("Pandemic Period NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
+    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+  
+  print(p)
+}
+```
+
+From the graphs above, we can see that crimes generally increase from April 2020 to July 2020, followed by a decrease from July 2020 to January 2021, followed by an increase from January 2021 to October 2021, and then a decrease from July 2021 to January 2022. Very generally, this follows the same pattern as mobility data, with variations only in a few months. This indicates that during the pandemic period, park visits were correlated in trends with crime frequency at parks. However, we note that this also correlated with warmer weather and potentially numberous other factors. 
+
 
 

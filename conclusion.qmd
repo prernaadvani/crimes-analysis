@@ -1,1 +1,11 @@
 # Conclusion
+
+
+*Crimes Analysis*
+We looked at a stacked bar graph with crime counts over time for all boroughs, which showed fluctuations in crime rates over time. To analyze seasonality further, we created a heatmap with crime dates by quarter, which showed more clearly that 3Q tends to have higher crime rates. Next, we analyzed total crime rates for each borough individually, which showed that the trends in crimes show an increasing trend from 2015 to 2019, followed by declines during the pandemic, followed by increases through 2023 with a tendency to surpass the previous crime records (except for the Bronx). To analyze the data by crime type, we generated line graphs with trends in each of the 7 types of crime over time for each borough, which highlighted robbery and grand larsony as two of the most frequent crimes. Then, we examined a potential correlation between the number of crimes at park based on the size of the park, and saw tht there was no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.
+
+*Unemployment Correlations*
+We plotted a line graph showing a time series of unemployment rates from 2013-2023. We included a trend line to see how rates have changed over time. Then, we created similar graphs for crime rates showing their respective trend lines over time for each borough. Generally, we found that the trends were the opposite between the two sets of data, highlighting that crime is lower during periods of higher unemployment. We note correlation does not mean causation.
+
+*Mobility data*
+We used pandemic-period Google Mobility data to see the trends in park visits over a 2 year time frame for all 5 boroughs. We saw that the greatest relative increase in park visits was seen in Queens and the smallest relative increase was in Manhattan. We the summarized the total number of parks in each borough, and found that the number of parks were not indicative of the trends in park visits. Lastly, we noted the trends in park visits for each borough and generated crime rate graphs for the same time period to compare. At a high level, we noted similarities in trends.
