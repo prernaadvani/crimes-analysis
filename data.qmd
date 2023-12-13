@@ -28,7 +28,7 @@ We plan to use NYC crimes data to track how the frequency of different types of 
 
 First, we examine the crimes datasets. We will begin by first pulling data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(readxl)
 nyc_park_crime_stats_q3_2023 <- read_excel("~/Desktop/crime_data/nyc-park-crime-stats-q3-2023.xlsx") #read data
 
@@ -37,7 +37,7 @@ head(nyc_park_crime_stats_q3_2023)
 ```
 We can see that there are a few extra rows of data at the top and row 3 needs to be the header. 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 colnames(nyc_park_crime_stats_q3_2023) = nyc_park_crime_stats_q3_2023[3,] #set row 3 as header
 nyc_park_crime_stats_q3_2023 = nyc_park_crime_stats_q3_2023[-c(1,2,3), ] #remove first 3 rows of data
 head(nyc_park_crime_stats_q3_2023) #new data column names
@@ -46,19 +46,19 @@ head(nyc_park_crime_stats_q3_2023) #new data column names
 
 Here, we show the features of crimes data: park, borough, park size, number of crimes by type of crime.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # examine whether thre are missing values
 colSums(is.na(nyc_park_crime_stats_q3_2023))
 ```
 Here, we can see there are only some missing values in each column, which are negligible. Therefore we just delete the records with missing values.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 nyc_park_crime_stats_q3_2023_clean <- na.omit(nyc_park_crime_stats_q3_2023)
 head(nyc_park_crime_stats_q3_2023_clean)
 ```
 To visualize the crimes by borough, we first compute the total crimes.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(dplyr)
 nyc_park_crime_stats_q3_2023_clean <- nyc_park_crime_stats_q3_2023_clean %>%
   mutate_at(vars(TOTAL), as.numeric)
@@ -72,7 +72,7 @@ print(borough_crime_totals)
 ```
 Then we use bar chart to show the results.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
 borough_data = as.data.frame(borough_crime_totals)
 
@@ -87,26 +87,26 @@ ggplot(borough_data, aes(x = BOROUGH, y = Total_Crimes, fill = BOROUGH)) +
 
 Then, we examine the dataset for unemployment rates.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx") #read data
 print(unemployment_rate)
 ```
 
 It's obvious that the missing values are average unemployment rates for each year and the last two months in 2023. For the average rates, we can directly compute the average rates based on monthly rates.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 unemployment_rate$Avg <- rowMeans(unemployment_rate[, 2:13], na.rm = TRUE)
 ```
 
 As for missing values for the last two months in 2023, it's reasonable because there is no data available yet for months in the future. We can just ignore the missing values here.
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 print(unemployment_rate)
 ```
 The following line graph is a time series visualization showing the variation in unemployment rates for each month across different years. There are no gaps in this plot, verifying no missing values in the dataset.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -127,7 +127,7 @@ ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
 
 We examine the mobility dataset. We only focus on the feature: parks_percent_change_from_baseline.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #import data
 
 data = read.csv('https://raw.githubusercontent.com/ActiveConclusion/COVID19_mobility/master/google_reports/mobility_report_US.csv')
@@ -141,7 +141,7 @@ head(nyc_data)
 
 This data shows changes in park visit frequency relative to pre-pandemic levels. For example, in the table above, we can see that total New York park visits were down 2 points on February 15th 2020 and up 13 points on February 16th 2020.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Step 3: Visualization for total NY park frequency
 ny_summary = nyc_data %>%
   filter(county == "Total")
@@ -155,7 +155,7 @@ ggplot(ny_summary, aes(x = date, y = parks, fill = parks)) +
 ```
 Since the Mobility data is defined by counties and our NYC crimes data is defined by borough, we can filter for counties that encompass in the 5 NYC boroughs. 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 selected_regions <- nyc_data %>%
   filter(county %in% c("Bronx County", "Kings County", "Queens County", 
                              "New York County", "Richmond County"))
@@ -173,7 +173,7 @@ selected_regions <- selected_regions %>%
 ```
 Next we test whether there are missing values in selected boroughs.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 na_count_parks_percent_change <- sum(is.na(selected_regions$parks_percent_change_from_baseline))
 
 print(na_count_parks_percent_change)
@@ -182,7 +182,7 @@ print(na_count_parks_percent_change)
 The result shows that the dataset is complete without missing values. Then we can draw the summarized bar chart based on selected boroughs.
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(scales)
 selected_regions$date = as.Date(selected_regions$date)
 ggplot(selected_regions, aes(fill=county, y=parks, x=date)) + 
@@ -195,7 +195,7 @@ ggplot(selected_regions, aes(fill=county, y=parks, x=date)) +
 
 Since the data is tough to read in detail, we can summarize it by each month of data collected
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 selected_regions$date = as.Date(selected_regions$date)
 monthly_values = selected_regions %>% 
     group_by(month = lubridate::floor_date(date, 'month'), county) %>%

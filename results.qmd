@@ -5,7 +5,7 @@
 
 We first get an idea of the total crime distribution in NYC boroughs.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(readxl)
 library(dplyr)
 library(ggplot2)
