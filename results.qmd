@@ -1,6 +1,5 @@
 # Results
 
-
 ## NYC Park Total Crimes by Borough
 
 We first get an idea of the total crime distribution in NYC boroughs.
