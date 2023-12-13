@@ -55,6 +55,12 @@ crime_stats <- all_data %>%
     summarize(Total_Crimes = sum(as.numeric(TOTAL), na.rm = TRUE))
 ```
 
+```{r, warning=FALSE, message=FALSE}
+# preparation for D3
+# Convert the crime_stats data frame to JSON and write to a file
+json_data <- jsonlite::toJSON(crime_stats, pretty = TRUE)
+write(json_data, "crime_stats.json")
+```
 
 ```{r fig.width=11, fig.height=6.5, out.width='100%'}
 custom_colors <- c("orange", "skyblue","pink", "#4DAF4A", "purple")

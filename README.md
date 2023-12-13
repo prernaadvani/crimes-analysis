@@ -16,5 +16,20 @@ Our approach involves various methods of data slicing, manipulation, and visuali
 
 ## Contributing
 
-This part is currently left empty and will be written after finishing our analysis.
+### Crimes Analysis:
+
+- Crime rates fluctuate over time and tend to be higher in the third quarter.
+- From 2015 to 2023, there's an overall increase in crime rates, with robbery and grand larceny being most frequent, except for a deviation in the Bronx.
+- No clear correlation between the size of parks and the number of crimes.
+
+### Unemployment Correlations:
+
+- An inverse relationship is observed between unemployment rates and crime rates from 2013 to 2023, with lower crime during higher unemployment periods.
+- This finding suggests a potential, but not definitive, linkage between economic conditions and crime rates.
+
+### Mobility Data:
+  
+- During the pandemic, park visits varied significantly across boroughs, with Queens experiencing the largest increase.
+- The number of parks in each borough did not directly correlate with park visitation trends.
+- There were some similarities observed between trends in park visits and crime rates.
 
