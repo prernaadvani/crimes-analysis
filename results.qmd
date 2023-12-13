@@ -1,8 +1,8 @@
 # Results
 
-## NYC Park Total Crimes by Borough
+## Borough Breakdown: Dissecting NYC's Park Crime Statistics
 
-We first get an idea of the total crime distribution in NYC boroughs.
+We first get an idea of the total crime distributions in NYC boroughs.
 
 ```{r, warning=FALSE, message=FALSE}
 library(readxl)
@@ -68,13 +68,15 @@ ggplot(crime_stats, aes(x = Time_Period, y = Total_Crimes, fill = BOROUGH)) +
     theme(axis.text.x = element_text(angle = 90))
 ```
 
-This plot shows trends of total crimes by borough in different NYC boroughs. The crime data is from 2015 Spring to 2023 Autumn. 
+This stacked bar chart shows trends of total crimes in 5 different NYC boroughs, covering a period from 2015 Q1 (First Quarter of 2015) to 2023 Q3 (Third Quarter of 2023).
 
-Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races..). 
+Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races, community construction..). QUEENS generally has fewer crimes than MANHATTAN and BROOKLYN but more than the BRONX and STATEN ISLAND.
 
-We also notice that crimes happen more in Q3 (the third quarter) each year. There are increasing trends from 2015 to 2019 and plummets from 2020 to 2021. The cause may be the pandemic, when lockdown and disease happened more often.
+We also notice that crimes happen more in Q3 (the third quarter) each year. This periods are possibly warmer months when parks are more frequented.
 
-## Heatmap of Total Crimes
+There are increasing trends from 2015 to 2019. There is a noticeable drop in the total number of park crimes across all boroughs starting from 2020 Q1, which could be attributed to the COVID-19 pandemic and subsequent lockdowns or restrictions on park access.
+
+## Crime Patterns Unveiled: A Heatmap Analysis of Park Crimes
 
 Heatmap based on quarters and boroughs shows directly the seasonal patterns and densities of crimes.
 
@@ -89,13 +91,17 @@ ggplot(crime_stats, aes(x = Time_Period, y = BOROUGH, fill = Total_Crimes)) +
        fill = "Total Crimes") +
   theme(axis.text.x = element_text(angle = 90))
 ```
-There appears to be a recurring pattern within each year, suggesting a seasonal trend in crime numbers. For instance, the third quarters consistently show higher crime rates across multiple years. This may result from the weather and temperature. It seems crimes seldom take place in winter, but more in autumn.
+The provided plot is a heatmap that represents the total crimes reported in parks within the five boroughs of New York City over several years, from 2015 to 2023, by quarter. The color intensity represents the number of crimes, with darker red indicating a higher number of crimes and lighter blue colors indicating fewer crimes. 
+
+There appears to be a recurring pattern within each year, suggesting a seasonal trend in crime numbers. For instance, the third quarters consistently show higher crime rates across multiple years. This may result from the weather and temperature. It seems crimes seldom take place in winter, but more in summer and autumn.
 
 Some years stand out with overall higher crime rates across all boroughs, including 2017, 2018, 2019 and 2022. This could be indicative of broader societal factors affecting crime rates, such as economic downturns or changes in policing policy.
 
+There appears to be a lightening of the color (reduction in crimes) in 2020, which is possibly related to the COVID-19 pandemic when there may have been less activity in parks due to lockdowns and social distancing measures.
+
 The intensity of colors varies across boroughs, indicating that some areas consistently experience higher crime rates than others. For example, MANHATTAN and BROOKLYN show more intense colors compared to STATEN ISLAND. Although STATEN ISLAND reports few crimes, we can still see light strips in the heatmap which indicate seasonal trends of crimes. This is hard to capture in the previous bar chart.
 
-## Trends in Total Crimes
+## Tracking Trends of Park Crimes Through Years
 
 To see the trends more clearly for boroughs, we draw separate bar charts with LOESS smoothing lines to illustrate the trends.
 
@@ -107,7 +113,8 @@ convert_to_date <- function(time_period) {
   quarter <- substr(parts[2], 2, 2)
 
   month <- match(quarter, c("1", "2", "3", "4")) * 3 - 2
-  as.Date(paste(year, sprintf("%02d", month), "01", sep = "-"))
+  paste(year, sprintf("%02d", month), "01", sep = "-")
+  #as.Date(paste(year, sprintf("%02d", month), "01", sep = "-"))
 }
 
 crime_stats$Time_Period <- sapply(crime_stats$Time_Period, convert_to_date)
@@ -134,12 +141,14 @@ for (borough in boroughs) {
   print(p)
 }
 ```
+Black lines in the provided plots are LOESS smoothing lines, illustrating the underlying structure (trend) of the crimes data.
+
 The general trends for BROOKLYN, MANHATTAN, QUEENS and STATEN ISLAND are similar. They all show an increasing trend from 2015 to 2019, and then crime numbers dropped during the pandemic. In the end, crime data again increase, with a tendency to surpass the previous crime records. However, it's different for BRONX. The crimes start decreasing before the pandemic, and then decline gradually and slowly. This trend in BRONX is clear in this plot, but not apparent in the previous section.
 
 
-## NYC Park Crime by Crime Categories
+## Criminal Behaviors Varying in NYC Boroughs
 
-Here we look into crime details for different boroughs. We focus on the crime categories.
+Here we look into crime details for different boroughs, verifying if there are distinct patterns of crime specific to each borough. By examining the categories of crimes, we aim to uncover whether certain types of crimes are more prevalent in one borough over another, providing insight into the unique safety challenges each borough may face.
 
 ```{r fig.width=11, fig.height=6.5, out.width='100%', warning=FALSE, message=FALSE}
 long_data <- all_data %>%
@@ -174,14 +183,16 @@ for (borough in boroughs) {
 
 Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.
 
-Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quaters.
+Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quarters.
 
 We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.
 
 These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.
 
 
-## Relationships between Park Sizes and Crimes
+## Space-Crime Exploration: Correlating NYC Park Sizes with Crime Rates
+
+Larger parks may present more opportunities for criminal activities due to their expansive areas and diverse usage, while smaller parks could potentially have fewer incidents owing to their limited space and easier surveillance. To see whether there are relationship between park sizes and crime rates, we will explore the scatterplot to understand how park sizes correlate with the prevalence of crime within these boroughs.
 
 ```{r}
 all_data$TOTAL <- as.numeric(all_data$TOTAL)
@@ -246,13 +257,13 @@ There's a dense cluster of points near the origin, indicating that smaller parks
 
 Crime data have different distributions based on boroughs. It's noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.
 
-## Link Between Unemployment and NYC Park Crime
+## Economic Shadows: Unemployment's Potential Influence on Park Crimes
 
 It is commonly assumed that higher unemployment leads to higher crime rates. There are some reasons. For example, unemployment can lead to financial hardship, increasing the likelihood of engaging in criminal activities as a means of survival or income generation. With more people unemployed, there is a higher likelihood that some individuals will turn to crime, given the increased opportunities and time available. 
 
 However, there exist other relationships. For example, the level of unemployment is expected to be negatively associated with fluctuations in crime rates. It might suggest that the factors leading to changes in unemployment rates (such as economic conditions, policy changes, or labor market dynamics) could also be influencing crime rates in the opposite direction. In a booming economy, unemployment might decrease, but the increased activity and wealth might lead to more opportunities for certain types of crime (like theft or fraud). It could also imply that the relationship between unemployment and crime is not straightforward or direct and might be influenced by other mediating factors. 
 
-We will investigate the link between unemlpoyment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.
+We will investigate the link between unemployment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.
 
 ```{r, warning=FALSE, message=FALSE}
 unemployment_rate <- read_excel("~/Desktop/unemployment_rate.xlsx") # Read data
@@ -276,9 +287,9 @@ ggplot(unemployment_long, aes(x = Year + (Month-1)/12, y = UnemploymentRate)) +
 
 It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2018 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.
 
-it's worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor. 
+it's worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in summer and autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor. 
 
-We further look at the two most possible and common crime types that may be related to the negative association with unemployment rates.
+We further look at the two most possible and common crime types (robbery and grand larceny) that may be related to the negative association with unemployment rates.
 
 ```{r fig.width=11, fig.height=6.5, out.width='100%',warning=FALSE, message=FALSE}
 long_data_sub <- all_data %>%
@@ -315,7 +326,7 @@ If data was correlated with unemployement rates, we would expect the rate of eac
 
 We note grand larceny in STATEN ISLAND does not follow this general trend as it increases from 2015-2019, decreases from 2019-2021, and then increases from 2021-2023. However, we note that data is sparse for STATEN ISLAND as the range for total number of grand larceny crimes documented is between 0-2 during the entire time period. We also note that trend lines for robbery in MANHATTAN do not follow this pattern as it stays largely flat throughout the time period analyzed. 
 
-## Google Mobility Analysis
+## Pandemic Patterns: Analyzing NYC Park Visitation and Crime Rates (2020-2022)
 
 We can do a closer analysis of park visits data during the pandemic period using Google Mobility data. This analysis will be completed from February 2020 until February 2022.
 

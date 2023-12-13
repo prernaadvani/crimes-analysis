@@ -176,12 +176,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#nyc-park-total-crimes-by-borough" id="toc-nyc-park-total-crimes-by-borough" class="nav-link active" data-scroll-target="#nyc-park-total-crimes-by-borough"><span class="header-section-number">3.1</span> NYC Park Total Crimes by Borough</a></li>
-  <li><a href="#heatmap-of-total-crimes" id="toc-heatmap-of-total-crimes" class="nav-link" data-scroll-target="#heatmap-of-total-crimes"><span class="header-section-number">3.2</span> Heatmap of Total Crimes</a></li>
-  <li><a href="#trends-in-total-crimes" id="toc-trends-in-total-crimes" class="nav-link" data-scroll-target="#trends-in-total-crimes"><span class="header-section-number">3.3</span> Trends in Total Crimes</a></li>
-  <li><a href="#nyc-park-crime-by-crime-categories" id="toc-nyc-park-crime-by-crime-categories" class="nav-link" data-scroll-target="#nyc-park-crime-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime by Crime Categories</a></li>
-  <li><a href="#relationships-between-park-sizes-and-crimes" id="toc-relationships-between-park-sizes-and-crimes" class="nav-link" data-scroll-target="#relationships-between-park-sizes-and-crimes"><span class="header-section-number">3.5</span> Relationships between Park Sizes and Crimes</a></li>
-  <li><a href="#link-between-unemployment-and-nyc-park-crime" id="toc-link-between-unemployment-and-nyc-park-crime" class="nav-link" data-scroll-target="#link-between-unemployment-and-nyc-park-crime"><span class="header-section-number">3.6</span> Link Between Unemployment and NYC Park Crime</a></li>
+  <li><a href="#borough-breakdown-dissecting-nycs-park-crime-statistics" id="toc-borough-breakdown-dissecting-nycs-park-crime-statistics" class="nav-link active" data-scroll-target="#borough-breakdown-dissecting-nycs-park-crime-statistics"><span class="header-section-number">3.1</span> Borough Breakdown: Dissecting NYC’s Park Crime Statistics</a></li>
+  <li><a href="#crime-patterns-unveiled-a-heatmap-analysis-of-park-crimes" id="toc-crime-patterns-unveiled-a-heatmap-analysis-of-park-crimes" class="nav-link" data-scroll-target="#crime-patterns-unveiled-a-heatmap-analysis-of-park-crimes"><span class="header-section-number">3.2</span> Crime Patterns Unveiled: A Heatmap Analysis of Park Crimes</a></li>
+  <li><a href="#tracking-trends-of-park-crimes-through-years" id="toc-tracking-trends-of-park-crimes-through-years" class="nav-link" data-scroll-target="#tracking-trends-of-park-crimes-through-years"><span class="header-section-number">3.3</span> Tracking Trends of Park Crimes Through Years</a></li>
+  <li><a href="#criminal-behaviors-varying-in-nyc-boroughs" id="toc-criminal-behaviors-varying-in-nyc-boroughs" class="nav-link" data-scroll-target="#criminal-behaviors-varying-in-nyc-boroughs"><span class="header-section-number">3.4</span> Criminal Behaviors Varying in NYC Boroughs</a></li>
+  <li><a href="#space-crime-exploration-correlating-nyc-park-sizes-with-crime-rates" id="toc-space-crime-exploration-correlating-nyc-park-sizes-with-crime-rates" class="nav-link" data-scroll-target="#space-crime-exploration-correlating-nyc-park-sizes-with-crime-rates"><span class="header-section-number">3.5</span> Space-Crime Exploration: Correlating NYC Park Sizes with Crime Rates</a></li>
+  <li><a href="#economic-shadows-unemployments-potential-influence-on-park-crimes" id="toc-economic-shadows-unemployments-potential-influence-on-park-crimes" class="nav-link" data-scroll-target="#economic-shadows-unemployments-potential-influence-on-park-crimes"><span class="header-section-number">3.6</span> Economic Shadows: Unemployment’s Potential Influence on Park Crimes</a></li>
+  <li><a href="#pandemic-patterns-analyzing-nyc-park-visitation-and-crime-rates-2020-2022" id="toc-pandemic-patterns-analyzing-nyc-park-visitation-and-crime-rates-2020-2022" class="nav-link" data-scroll-target="#pandemic-patterns-analyzing-nyc-park-visitation-and-crime-rates-2020-2022"><span class="header-section-number">3.7</span> Pandemic Patterns: Analyzing NYC Park Visitation and Crime Rates (2020-2022)</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/prernaadvani/crimes-analysis/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/prernaadvani/crimes-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -205,234 +206,154 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="nyc-park-total-crimes-by-borough" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="nyc-park-total-crimes-by-borough"><span class="header-section-number">3.1</span> NYC Park Total Crimes by Borough</h2>
-<p>We first get an idea of the total crime distribution in NYC boroughs.</p>
+<section id="borough-breakdown-dissecting-nycs-park-crime-statistics" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="borough-breakdown-dissecting-nycs-park-crime-statistics"><span class="header-section-number">3.1</span> Borough Breakdown: Dissecting NYC’s Park Crime Statistics</h2>
+<p>We first get an idea of the total crime distributions in NYC boroughs.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyr' was built under R version 4.1.2</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'lubridate' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'lubridate'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    date, intersect, setdiff, union</code></pre>
-</div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializes an empty data frame to store data for all quarters</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2023</span>) {</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (quarter <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Skip Q4 2023</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (year <span class="sc">==</span> <span class="dv">2023</span> <span class="sc">&amp;&amp;</span> quarter <span class="sc">==</span> <span class="dv">4</span>) {</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">next</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        file_path <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"~/Desktop/crime_data/nyc-park-crime-stats-q%d-%d.xlsx"</span>, quarter, year)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        temp_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path, <span class="at">skip =</span> <span class="dv">2</span>)  </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Uniform column name</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colnames</span>(temp_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"PARK"</span>, <span class="st">"BOROUGH"</span>, <span class="st">"SIZE_ACRES"</span>, <span class="st">"CATEGORY"</span>, <span class="st">"MURDER"</span>, <span class="st">"RAPE"</span>, <span class="st">"ROBBERY"</span>, <span class="st">"FELONY_ASSAULT"</span>, <span class="st">"BURGLARY"</span>, <span class="st">"GRAND_LARCENY"</span>, <span class="st">"GRAND_LARCENY_MV"</span>, <span class="st">"TOTAL"</span>)</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add a time period column</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        temp_data<span class="sc">$</span>Time_Period <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%d Q%d"</span>, year, quarter)</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Merge into the master data framework</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_data, temp_data)</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> all_data[all_data<span class="sc">$</span>BOROUGH <span class="sc">!=</span> <span class="st">"BOROUGH"</span>, ]</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> all_data[all_data<span class="sc">$</span>BOROUGH <span class="sc">!=</span> <span class="st">"BROOKLYN/QUEENS"</span>, ]</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializes an empty data frame to store data for all quarters</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#from our downloaded files, we import all the data and merge into one file</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2023</span>) {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (quarter <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Skip Q4 2023</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (year <span class="sc">==</span> <span class="dv">2023</span> <span class="sc">&amp;&amp;</span> quarter <span class="sc">==</span> <span class="dv">4</span>) {</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">next</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        file_path <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"~/Desktop/crime_data/nyc-park-crime-stats-q%d-%d.xlsx"</span>, quarter, year)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        temp_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(file_path, <span class="at">skip =</span> <span class="dv">2</span>)  </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Uniform column name</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colnames</span>(temp_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"PARK"</span>, <span class="st">"BOROUGH"</span>, <span class="st">"SIZE_ACRES"</span>, <span class="st">"CATEGORY"</span>, <span class="st">"MURDER"</span>, <span class="st">"RAPE"</span>, <span class="st">"ROBBERY"</span>, <span class="st">"FELONY_ASSAULT"</span>, <span class="st">"BURGLARY"</span>, <span class="st">"GRAND_LARCENY"</span>, <span class="st">"GRAND_LARCENY_MV"</span>, <span class="st">"TOTAL"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Add a time period column</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        temp_data<span class="sc">$</span>Time_Period <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"%d Q%d"</span>, year, quarter)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Merge into the master data framework</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> <span class="fu">rbind</span>(all_data, temp_data)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> all_data[all_data<span class="sc">$</span>BOROUGH <span class="sc">!=</span> <span class="st">"BOROUGH"</span>, ]</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        all_data <span class="ot">&lt;-</span> all_data[all_data<span class="sc">$</span>BOROUGH <span class="sc">!=</span> <span class="st">"BROOKLYN/QUEENS"</span>, ]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-New names:
-• `` -&gt; `...2`
-• `` -&gt; `...3`
-• `` -&gt; `...4`
-• `` -&gt; `...5`
-• `` -&gt; `...6`
-• `` -&gt; `...7`
-• `` -&gt; `...8`
-• `` -&gt; `...9`
-• `` -&gt; `...10`
-• `` -&gt; `...11`
-• `` -&gt; `...12`</code></pre>
-</div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the total number of crimes for each quarter and borough</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>crime_stats <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span>  <span class="co"># Exclude the rows where BOROUGH shows NA</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(TOTAL), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the total number of crimes for each quarter and borough</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>crime_stats <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span>  <span class="co"># Exclude the rows where BOROUGH shows NA</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Time_Period, BOROUGH) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(TOTAL), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'Time_Period'. You can override using the
-`.groups` argument.</code></pre>
-</div>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>custom_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"skyblue"</span>,<span class="st">"pink"</span>, <span class="st">"#4DAF4A"</span>, <span class="st">"purple"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># draw time series plot</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">fill =</span> BOROUGH)) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span>  </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"NYC Park Crime Trends by Borough"</span>, <span class="at">x=</span><span class="st">"Time Period"</span>, <span class="at">y=</span><span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>custom_colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"skyblue"</span>,<span class="st">"pink"</span>, <span class="st">"#4DAF4A"</span>, <span class="st">"purple"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># draw time series plot</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">fill =</span> BOROUGH)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"stack"</span>, <span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span>  </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"NYC Park Crime Trends by Borough"</span>, <span class="at">x=</span><span class="st">"Time Period"</span>, <span class="at">y=</span><span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
-<p>This plot shows trends of total crimes by borough in different NYC boroughs. The crime data is from 2015 Spring to 2023 Autumn.</p>
-<p>Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races..).</p>
-<p>We also notice that crimes happen more in Q3 (the third quarter) each year. There are increasing trends from 2015 to 2019 and plummets from 2020 to 2021. The cause may be the pandemic, when lockdown and disease happened more often.</p>
+<p>This stacked bar chart shows trends of total crimes in 5 different NYC boroughs, covering a period from 2015 Q1 (First Quarter of 2015) to 2023 Q3 (Third Quarter of 2023).</p>
+<p>Generally, MANHATTAN and BROOKLYN have the most total crimes. This may result from their large populations and high densities of population. In contrast, STATEN ISLAND has the least total crimes for similar potential reasons. This may be also related to population characteristics of residence (income, races, community construction..). QUEENS generally has fewer crimes than MANHATTAN and BROOKLYN but more than the BRONX and STATEN ISLAND.</p>
+<p>We also notice that crimes happen more in Q3 (the third quarter) each year. This periods are possibly warmer months when parks are more frequented.</p>
+<p>There are increasing trends from 2015 to 2019. There is a noticeable drop in the total number of park crimes across all boroughs starting from 2020 Q1, which could be attributed to the COVID-19 pandemic and subsequent lockdowns or restrictions on park access.</p>
 </section>
-<section id="heatmap-of-total-crimes" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="heatmap-of-total-crimes"><span class="header-section-number">3.2</span> Heatmap of Total Crimes</h2>
+<section id="crime-patterns-unveiled-a-heatmap-analysis-of-park-crimes" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="crime-patterns-unveiled-a-heatmap-analysis-of-park-crimes"><span class="header-section-number">3.2</span> Crime Patterns Unveiled: A Heatmap Analysis of Park Crimes</h2>
 <p>Heatmap based on quarters and boroughs shows directly the seasonal patterns and densities of crimes.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> BOROUGH, <span class="at">fill =</span> Total_Crimes)) <span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"NYC Park Crime Heatmap by Borough and Year"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Borough"</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> BOROUGH, <span class="at">fill =</span> Total_Crimes)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"lightblue"</span>, <span class="at">high =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"NYC Park Crime Heatmap by Borough and Year"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Borough"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>There appears to be a recurring pattern within each year, suggesting a seasonal trend in crime numbers. For instance, the third quarters consistently show higher crime rates across multiple years. This may result from the weather and temperature. It seems crimes seldom take place in winter, but more in autumn.</p>
+<p>The provided plot is a heatmap that represents the total crimes reported in parks within the five boroughs of New York City over several years, from 2015 to 2023, by quarter. The color intensity represents the number of crimes, with darker red indicating a higher number of crimes and lighter blue colors indicating fewer crimes.</p>
+<p>There appears to be a recurring pattern within each year, suggesting a seasonal trend in crime numbers. For instance, the third quarters consistently show higher crime rates across multiple years. This may result from the weather and temperature. It seems crimes seldom take place in winter, but more in summer and autumn.</p>
 <p>Some years stand out with overall higher crime rates across all boroughs, including 2017, 2018, 2019 and 2022. This could be indicative of broader societal factors affecting crime rates, such as economic downturns or changes in policing policy.</p>
+<p>There appears to be a lightening of the color (reduction in crimes) in 2020, which is possibly related to the COVID-19 pandemic when there may have been less activity in parks due to lockdowns and social distancing measures.</p>
 <p>The intensity of colors varies across boroughs, indicating that some areas consistently experience higher crime rates than others. For example, MANHATTAN and BROOKLYN show more intense colors compared to STATEN ISLAND. Although STATEN ISLAND reports few crimes, we can still see light strips in the heatmap which indicate seasonal trends of crimes. This is hard to capture in the previous bar chart.</p>
 </section>
-<section id="trends-in-total-crimes" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="trends-in-total-crimes"><span class="header-section-number">3.3</span> Trends in Total Crimes</h2>
+<section id="tracking-trends-of-park-crimes-through-years" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="tracking-trends-of-park-crimes-through-years"><span class="header-section-number">3.3</span> Tracking Trends of Park Crimes Through Years</h2>
 <p>To see the trends more clearly for boroughs, we draw separate bar charts with LOESS smoothing lines to illustrate the trends.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function: Converts a string in the format "2019 Q1" to a date</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>convert_to_date <span class="ot">&lt;-</span> <span class="cf">function</span>(time_period) {</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  parts <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(time_period, <span class="st">" "</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">&lt;-</span> parts[<span class="dv">1</span>]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  quarter <span class="ot">&lt;-</span> <span class="fu">substr</span>(parts[<span class="dv">2</span>], <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  month <span class="ot">&lt;-</span> <span class="fu">match</span>(quarter, <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>)) <span class="sc">*</span> <span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.Date</span>(<span class="fu">paste</span>(year, <span class="fu">sprintf</span>(<span class="st">"%02d"</span>, month), <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>))</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>crime_stats<span class="sc">$</span>Time_Period <span class="ot">&lt;-</span> <span class="fu">sapply</span>(crime_stats<span class="sc">$</span>Time_Period, convert_to_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function: Converts a string in the format "2019 Q1" to a date</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>convert_to_date <span class="ot">&lt;-</span> <span class="cf">function</span>(time_period) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  parts <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(time_period, <span class="st">" "</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">&lt;-</span> parts[<span class="dv">1</span>]</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  quarter <span class="ot">&lt;-</span> <span class="fu">substr</span>(parts[<span class="dv">2</span>], <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  month <span class="ot">&lt;-</span> <span class="fu">match</span>(quarter, <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>)) <span class="sc">*</span> <span class="dv">3</span> <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(year, <span class="fu">sprintf</span>(<span class="st">"%02d"</span>, month), <span class="st">"01"</span>, <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#as.Date(paste(year, sprintf("%02d", month), "01", sep = "-"))</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>crime_stats<span class="sc">$</span>Time_Period <span class="ot">&lt;-</span> <span class="fu">sapply</span>(crime_stats<span class="sc">$</span>Time_Period, convert_to_date)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>crime_stats<span class="sc">$</span>Time_Period <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(crime_stats<span class="sc">$</span>Time_Period)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the time series for each borough and add a LOESS smoothing line</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_stats<span class="sc">$</span>BOROUGH)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_stats, BOROUGH <span class="sc">==</span> borough)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes)) <span class="sc">+</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(), <span class="fu">aes</span>(<span class="at">fill =</span> BOROUGH)) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linetype =</span> <span class="st">'solid'</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough),</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Time Period"</span>,</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the time series for each borough and add a LOESS smoothing line</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_stats<span class="sc">$</span>BOROUGH)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_stats, BOROUGH <span class="sc">==</span> borough)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes)) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(), <span class="fu">aes</span>(<span class="at">fill =</span> BOROUGH)) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linetype =</span> <span class="st">'solid'</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> custom_colors) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Time Period"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Total Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
@@ -442,111 +363,108 @@ New names:
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-14-4.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-14-4.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-14-5.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-14-5.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
+<p>Black lines in the provided plots are LOESS smoothing lines, illustrating the underlying structure (trend) of the crimes data.</p>
 <p>The general trends for BROOKLYN, MANHATTAN, QUEENS and STATEN ISLAND are similar. They all show an increasing trend from 2015 to 2019, and then crime numbers dropped during the pandemic. In the end, crime data again increase, with a tendency to surpass the previous crime records. However, it’s different for BRONX. The crimes start decreasing before the pandemic, and then decline gradually and slowly. This trend in BRONX is clear in this plot, but not apparent in the previous section.</p>
 </section>
-<section id="nyc-park-crime-by-crime-categories" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="nyc-park-crime-by-crime-categories"><span class="header-section-number">3.4</span> NYC Park Crime by Crime Categories</h2>
-<p>Here we look into crime details for different boroughs. We focus on the crime categories.</p>
+<section id="criminal-behaviors-varying-in-nyc-boroughs" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="criminal-behaviors-varying-in-nyc-boroughs"><span class="header-section-number">3.4</span> Criminal Behaviors Varying in NYC Boroughs</h2>
+<p>Here we look into crime details for different boroughs, verifying if there are distinct patterns of crime specific to each borough. By examining the categories of crimes, we aim to uncover whether certain types of crimes are more prevalent in one borough over another, providing insight into the unique safety challenges each borough may face.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>long_data <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"MURDER"</span>, <span class="st">"RAPE"</span>, <span class="st">"ROBBERY"</span>, <span class="st">"FELONY_ASSAULT"</span>, <span class="st">"BURGLARY"</span>, <span class="st">"GRAND_LARCENY"</span>, <span class="st">"GRAND_LARCENY_MV"</span>),</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"CRIME_TYPE"</span>,</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"CRIME_COUNT"</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>crime_type_stats <span class="ot">&lt;-</span> long_data <span class="sc">%&gt;%</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH, CRIME_TYPE) <span class="sc">%&gt;%</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(CRIME_COUNT), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'Time_Period', 'BOROUGH'. You can override
-using the `.groups` argument.</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a line chart for each borough</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_type_stats<span class="sc">$</span>BOROUGH)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_type_stats, BOROUGH <span class="sc">==</span> borough)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> CRIME_TYPE, <span class="at">group =</span> CRIME_TYPE)) <span class="sc">+</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>long_data <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"MURDER"</span>, <span class="st">"RAPE"</span>, <span class="st">"ROBBERY"</span>, <span class="st">"FELONY_ASSAULT"</span>, <span class="st">"BURGLARY"</span>, <span class="st">"GRAND_LARCENY"</span>, <span class="st">"GRAND_LARCENY_MV"</span>),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"CRIME_TYPE"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"CRIME_COUNT"</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>crime_type_stats <span class="ot">&lt;-</span> long_data <span class="sc">%&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH, CRIME_TYPE) <span class="sc">%&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(CRIME_COUNT), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a line chart for each borough</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_type_stats<span class="sc">$</span>BOROUGH)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_type_stats, BOROUGH <span class="sc">==</span> borough)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> CRIME_TYPE, <span class="at">group =</span> CRIME_TYPE)) <span class="sc">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-16-3.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-16-4.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-16-5.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
 <p>Generally, robbery, felony assault and grand larceny are three common crime categories in all boroughs. Crime numbers of these three types are much higher than other crime types. Other crimes like rape rarely happen, less than 5 per quarter.</p>
-<p>Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quaters.</p>
+<p>Seasonal differences are evident here. Fluctuation show peaks in the third quarter and low ebbs in the first quarters.</p>
 <p>We notice there are obvious differences in boroughs. In BRONX, robbery is always the most common crime except the year 2020. However, grand larceny is the most common crime in BROOKLYN, MANHATTAN and QUEENS. This may be related to population density, tourist activity and commercial activity in these areas. STATEN ISLAND does not show any trend or dominant crime types, different from other boroughs. This aligns with the small crime numbers in STATE ISLAND. It seems that STATEN ISLAND is relatively safer than other boroughs.</p>
 <p>These observed crime patterns may be influenced by different socio-economic conditions across regions, such as poverty levels, unemployment rates, education levels, and community resources.</p>
 </section>
-<section id="relationships-between-park-sizes-and-crimes" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="relationships-between-park-sizes-and-crimes"><span class="header-section-number">3.5</span> Relationships between Park Sizes and Crimes</h2>
+<section id="space-crime-exploration-correlating-nyc-park-sizes-with-crime-rates" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="space-crime-exploration-correlating-nyc-park-sizes-with-crime-rates"><span class="header-section-number">3.5</span> Space-Crime Exploration: Correlating NYC Park Sizes with Crime Rates</h2>
+<p>Larger parks may present more opportunities for criminal activities due to their expansive areas and diverse usage, while smaller parks could potentially have fewer incidents owing to their limited space and easier surveillance. To see whether there are relationship between park sizes and crime rates, we will explore the scatterplot to understand how park sizes correlate with the prevalence of crime within these boroughs.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>all_data<span class="sc">$</span>TOTAL <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(all_data<span class="sc">$</span>TOTAL)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a summary data frame</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>park_crime_stats <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PARK, BOROUGH) <span class="sc">%&gt;%</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total_Crimes =</span> <span class="fu">sum</span>(TOTAL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Park_Size =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(SIZE_ACRES), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>all_data<span class="sc">$</span>TOTAL <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(all_data<span class="sc">$</span>TOTAL)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a summary data frame</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>park_crime_stats <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(PARK, BOROUGH) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Total_Crimes =</span> <span class="fu">sum</span>(TOTAL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">Park_Size =</span> <span class="fu">mean</span>(<span class="fu">as.numeric</span>(SIZE_ACRES), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'PARK'. You can override using the
@@ -556,18 +474,18 @@ using the `.groups` argument.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatterplot</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(park_crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Park_Size, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> BOROUGH)) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_x_log10() +  # Logarithmic scale for park size</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship between Park Size, Crime, and Borough"</span>,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Park Size (Acres, log scale)"</span>,</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total Crimes"</span>,</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Borough"</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatterplot</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(park_crime_stats, <span class="fu">aes</span>(<span class="at">x =</span> Park_Size, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> BOROUGH)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#scale_x_log10() +  # Logarithmic scale for park size</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship between Park Size, Crime, and Borough"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Park Size (Acres, log scale)"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total Crimes"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Borough"</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
@@ -577,145 +495,348 @@ using the `.groups` argument.</code></pre>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coomputer IQR</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>iqr_stats <span class="ot">&lt;-</span> park_crime_stats <span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(Total_Crimes, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(Total_Crimes, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IQR =</span> Q3 <span class="sc">-</span> Q1)</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define ranges for outliers</span></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">&lt;-</span> iqr_stats<span class="sc">$</span>Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_stats<span class="sc">$</span>IQR</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">&lt;-</span> iqr_stats<span class="sc">$</span>Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_stats<span class="sc">$</span>IQR</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out outliers</span></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>park_crime_stats_filtered <span class="ot">&lt;-</span> park_crime_stats <span class="sc">%&gt;%</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Total_Crimes <span class="sc">&gt;=</span> lower_bound <span class="sc">&amp;</span> Total_Crimes <span class="sc">&lt;=</span> upper_bound)</span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatterplot again</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(park_crime_stats_filtered, <span class="fu">aes</span>(<span class="at">x =</span> Park_Size, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> BOROUGH)) <span class="sc">+</span></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship between Park Size, Crime, and Borough (Outliers Removed)"</span>,</span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Park Size (Acres)"</span>,</span>
-<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total Crimes"</span>,</span>
-<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Borough"</span></span>
-<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coomputer IQR</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>iqr_stats <span class="ot">&lt;-</span> park_crime_stats <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(Total_Crimes, <span class="fl">0.25</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(Total_Crimes, <span class="fl">0.75</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">IQR =</span> Q3 <span class="sc">-</span> Q1)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define ranges for outliers</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>lower_bound <span class="ot">&lt;-</span> iqr_stats<span class="sc">$</span>Q1 <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_stats<span class="sc">$</span>IQR</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>upper_bound <span class="ot">&lt;-</span> iqr_stats<span class="sc">$</span>Q3 <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> iqr_stats<span class="sc">$</span>IQR</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out outliers</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>park_crime_stats_filtered <span class="ot">&lt;-</span> park_crime_stats <span class="sc">%&gt;%</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Total_Crimes <span class="sc">&gt;=</span> lower_bound <span class="sc">&amp;</span> Total_Crimes <span class="sc">&lt;=</span> upper_bound)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the scatterplot again</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(park_crime_stats_filtered, <span class="fu">aes</span>(<span class="at">x =</span> Park_Size, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> BOROUGH)) <span class="sc">+</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Relationship between Park Size, Crime, and Borough (Outliers Removed)"</span>,</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Park Size (Acres)"</span>,</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total Crimes"</span>,</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Borough"</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>There’s a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, There is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.</p>
+<p>There’s a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, there is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.</p>
 <p>Crime data have different distributions based on boroughs. It’s noticeable that certain boroughs like MANHATTAN and BROOKLYN have points that lie closly on the y-axis (total crimes), indicating these boroughs have higher crime rates. STATEN ISLAND tends to have much lower crime rates no matter what the park size is. This also verifies STATEN ISLAND is safter than other boroughs.</p>
 </section>
-<section id="link-between-unemployment-and-nyc-park-crime" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="link-between-unemployment-and-nyc-park-crime"><span class="header-section-number">3.6</span> Link Between Unemployment and NYC Park Crime</h2>
+<section id="economic-shadows-unemployments-potential-influence-on-park-crimes" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="economic-shadows-unemployments-potential-influence-on-park-crimes"><span class="header-section-number">3.6</span> Economic Shadows: Unemployment’s Potential Influence on Park Crimes</h2>
 <p>It is commonly assumed that higher unemployment leads to higher crime rates. There are some reasons. For example, unemployment can lead to financial hardship, increasing the likelihood of engaging in criminal activities as a means of survival or income generation. With more people unemployed, there is a higher likelihood that some individuals will turn to crime, given the increased opportunities and time available.</p>
 <p>However, there exist other relationships. For example, the level of unemployment is expected to be negatively associated with fluctuations in crime rates. It might suggest that the factors leading to changes in unemployment rates (such as economic conditions, policy changes, or labor market dynamics) could also be influencing crime rates in the opposite direction. In a booming economy, unemployment might decrease, but the increased activity and wealth might lead to more opportunities for certain types of crime (like theft or fraud). It could also imply that the relationship between unemployment and crime is not straightforward or direct and might be influenced by other mediating factors.</p>
-<p>We will investigate the link between unemlpoyment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.</p>
+<p>We will investigate the link between unemployment and NYC park crimes here. We first illustrate the unemployment rate alongside the timeline and draw a LOESS smoothing line to see the trend.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>) <span class="co"># Read data</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># Calculate average</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(unemployment_rate, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Nov"</span>, <span class="st">"Dec"</span>)) <span class="co"># Remove missing values</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>unemployment_long <span class="ot">&lt;-</span> unemployment_rate <span class="sc">%&gt;%</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Jan<span class="sc">:</span>Dec, <span class="at">names_to =</span> <span class="st">"Month"</span>, <span class="at">values_to =</span> <span class="st">"UnemploymentRate"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">match</span>(Month, month.abb))</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(unemployment_long, <span class="fu">aes</span>(<span class="at">x =</span> Year <span class="sc">+</span> (Month<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">y =</span> UnemploymentRate)) <span class="sc">+</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> <span class="co"># Added missing +</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(unemployment_long<span class="sc">$</span>Year)) <span class="sc">+</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly Unemployment Rate Over Years"</span>,</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/unemployment_rate.xlsx"</span>) <span class="co"># Read data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>unemployment_rate<span class="sc">$</span>Avg <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(unemployment_rate[, <span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># Calculate average</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>unemployment_rate <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(unemployment_rate, <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Nov"</span>, <span class="st">"Dec"</span>)) <span class="co"># Remove missing values</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>unemployment_long <span class="ot">&lt;-</span> unemployment_rate <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> Jan<span class="sc">:</span>Dec, <span class="at">names_to =</span> <span class="st">"Month"</span>, <span class="at">values_to =</span> <span class="st">"UnemploymentRate"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">match</span>(Month, month.abb))</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(unemployment_long, <span class="fu">aes</span>(<span class="at">x =</span> Year <span class="sc">+</span> (Month<span class="dv">-1</span>)<span class="sc">/</span><span class="dv">12</span>, <span class="at">y =</span> UnemploymentRate)) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span> <span class="co"># Added missing +</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">unique</span>(unemployment_long<span class="sc">$</span>Year)) <span class="sc">+</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Monthly Unemployment Rate Over Years"</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="results_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.</p>
-<p>it’s worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor.</p>
-<p>We further look at the two most possible and common crime types that may be related to the negative association with unemployment rates.</p>
+<p>It is obvious that the unemployment rate decreases from 2013 to 2018, increases from 2018 to 2021 (pandemic), and decreases from 2021. In general, the unemployment rate and the number of total park crimes have the opposite trend.</p>
+<p>it’s worth noting that unemployment rate does not show seasonal differences, while park crimes happen more in summer and autumn and less in winter. This may be caused by the characteristics of parks. Parks are known to be open and outdoor.</p>
+<p>We further look at the two most possible and common crime types (robbery and grand larceny) that may be related to the negative association with unemployment rates.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>long_data_sub <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"ROBBERY"</span>, <span class="st">"GRAND_LARCENY"</span>),</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"CRIME_TYPE"</span>,</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"CRIME_COUNT"</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>crime_sub_stats <span class="ot">&lt;-</span> long_data_sub <span class="sc">%&gt;%</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH, CRIME_TYPE) <span class="sc">%&gt;%</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(CRIME_COUNT), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>long_data_sub <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"ROBBERY"</span>, <span class="st">"GRAND_LARCENY"</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"CRIME_TYPE"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"CRIME_COUNT"</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>crime_sub_stats <span class="ot">&lt;-</span> long_data_sub <span class="sc">%&gt;%</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(BOROUGH)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Time_Period, BOROUGH, CRIME_TYPE) <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Total_Crimes =</span> <span class="fu">sum</span>(<span class="fu">as.numeric</span>(CRIME_COUNT), <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a line chart for each borough</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_sub_stats<span class="sc">$</span>BOROUGH)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_sub_stats, BOROUGH <span class="sc">==</span> borough)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> CRIME_TYPE, <span class="at">group =</span> CRIME_TYPE)) <span class="sc">+</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'Time_Period', 'BOROUGH'. You can override
-using the `.groups` argument.</code></pre>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<p>If data was correlated with unemployement rates, we would expect the rate of each type of crime to follow a similar trajectory to unemployment: decreases from 2013 to 2018, increases from 2019 to 2021 (pandemic), and decreases from 2021. However, the data above shows the opposite of this trend. The general trend in crime rates across boroughs is that it increases slowly from 2015-2018, declines slowly from 2018-2022, and then begins to increase until the most recent quarter. This negative relationship with unemployment rate indicates that there is less crime when unemployment rates are higher, though there are likely other factors at play here that we have not accounted for.</p>
+<p>We note grand larceny in STATEN ISLAND does not follow this general trend as it increases from 2015-2019, decreases from 2019-2021, and then increases from 2021-2023. However, we note that data is sparse for STATEN ISLAND as the range for total number of grand larceny crimes documented is between 0-2 during the entire time period. We also note that trend lines for robbery in MANHATTAN do not follow this pattern as it stays largely flat throughout the time period analyzed.</p>
+</section>
+<section id="pandemic-patterns-analyzing-nyc-park-visitation-and-crime-rates-2020-2022" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="pandemic-patterns-analyzing-nyc-park-visitation-and-crime-rates-2020-2022"><span class="header-section-number">3.7</span> Pandemic Patterns: Analyzing NYC Park Visitation and Crime Rates (2020-2022)</h2>
+<p>We can do a closer analysis of park visits data during the pandemic period using Google Mobility data. This analysis will be completed from February 2020 until February 2022.</p>
+<div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a line chart for each borough</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_sub_stats<span class="sc">$</span>BOROUGH)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crime_sub_stats, BOROUGH <span class="sc">==</span> borough)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes, <span class="at">color =</span> CRIME_TYPE, <span class="at">group =</span> CRIME_TYPE)) <span class="sc">+</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import Google Data and clean</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">read.csv</span>(<span class="st">'https://raw.githubusercontent.com/ActiveConclusion/COVID19_mobility/master/google_reports/mobility_report_US.csv'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2: Filter for New York Data and Parks</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>nyc_data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"New York"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, date, parks)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>selected_regions <span class="ot">&lt;-</span> nyc_data <span class="sc">%&gt;%</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Bronx County"</span>, <span class="st">"Kings County"</span>, <span class="st">"Queens County"</span>, </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                             <span class="st">"New York County"</span>, <span class="st">"Richmond County"</span>))</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace borough names</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>selected_regions <span class="ot">&lt;-</span> selected_regions <span class="sc">%&gt;%</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">case_when</span>(</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"Bronx County"</span> <span class="sc">~</span> <span class="st">"BRONX"</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"Kings County"</span> <span class="sc">~</span> <span class="st">"BROOKLYN"</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"Queens County"</span> <span class="sc">~</span> <span class="st">"QUEENS"</span>,</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"New York County"</span> <span class="sc">~</span> <span class="st">"MANHATTAN"</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    county <span class="sc">==</span> <span class="st">"Richmond County"</span> <span class="sc">~</span> <span class="st">"STATEN ISLAND"</span>,</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> county</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>selected_regions<span class="sc">$</span>date <span class="ot">=</span> <span class="fu">as.Date</span>(selected_regions<span class="sc">$</span>date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting of graph</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(selected_regions, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> parks, <span class="at">color =</span> county)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in Park Visits From Baseline"</span>, <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Change From Baseline"</span>) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>In the graph above, we can see lots of fluctuations, which may be because park visitation increases on the weekends. To view a more consistent set of data, we can create a 7-day moving average so that the fluctuations are absorbed into the average of 7 days. For example, the value for park visits on February 7th will be average of the values from February 1-7.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>selected_regions2 <span class="ot">=</span> <span class="fu">transform</span>(selected_regions, <span class="at">avg7 =</span> <span class="fu">rollmeanr</span>(parks, <span class="dv">7</span>, <span class="at">fill =</span> <span class="cn">NA</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(selected_regions2, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> avg7, <span class="at">color =</span> county)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in Park Visits From Baseline"</span>, <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Change From Baseline"</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The first date of data is now Febuary 21 2020 instead of February 15 2020 since we are calculating a 7 day average. This means that our values no longer start at the indexed value = 0, which represents February 15 2020. In the graph above, we see that all counties generally follow the same trajectory: park visits increased steadily through the summer of 2020, and then decreased beginning in October 2020 through winter before picking back up in March 2021 for the summer and decreasing one last time starting in around September 2021 through February 2022. This aligns will more pleasant weather patterns to be outside.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#closer analysis of each county</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(selected_regions2, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> avg7, <span class="at">color =</span> county)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>county) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in Park Visits From Baseline"</span>, <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Change From Baseline"</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the graphs above, we can see that Queens saw the greatest increase in park visits compared to the other boroughs. At it’s peak around July 2020, park visits were more than 150% higher than the pre-pandemic levels in January 2020. Park visits in Queens peaked again during the following summer around July 2021 at ~120% higher than pre-pandemic levels. On the contrary, Manhattan saw the smallest increase in park visits (at its peak in February 2020, it was ~12.5% higher than pre=pandemic) and it also represents the borough with the lowest overall decline in park visits (at it’s trough in March 2020, it was ~70% below pre-pandemic levels). The Bronx and Staten Island had similar park frequency estimates, with peaks around 25-50% higher than pre-pandemic and lows around 50% below pre-pandemic, around the same times.</p>
+<p>Given these trends, we can use the NYC crimes data to see if this correlated with the number of parks in each borough - if correlated, we would expect to see that boroughs with more parks utilized them more frequently during the pandemic period. It would follow that Queens should have the most number of parks and Manhattan should have the fewest.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>number_of_parks <span class="ot">&lt;-</span> all_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(PARK, BOROUGH) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(BOROUGH) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>(<span class="at">n =</span> <span class="st">"parks"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#to order from high to low</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>number_of_parks <span class="ot">&lt;-</span> number_of_parks <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="sc">-</span>parks)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>number_of_parks<span class="sc">$</span>BOROUGH <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(number_of_parks<span class="sc">$</span>BOROUGH) </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>number_of_parks<span class="sc">$</span>BOROUGH <span class="ot">=</span> <span class="fu">factor</span>(number_of_parks<span class="sc">$</span>BOROUGH,number_of_parks<span class="sc">$</span>BOROUGH) </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">na.omit</span>(number_of_parks), <span class="fu">aes</span>(<span class="at">x =</span> BOROUGH, <span class="at">y =</span> parks, <span class="at">fill =</span> BOROUGH)) <span class="sc">+</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Parks by Borough"</span>, <span class="at">x =</span> <span class="st">"Borough"</span>, <span class="at">y =</span> <span class="st">"Number of Parks"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Based on the graph above, we can see that Brooklyn clearly has the most number of parks and Staten Island has the fewest, which means that there likely is no correlation between the visits to parks and the number of parks in the borough. However, since the visits are relative to pre-pandemic levels, it could also be the case that Brooklyn parks were heavily visited in the pre-pandemic periods such that there was not too much of an increase during the pandemic. Based on the number of parks above, we can also infer that the Bronx and Staten Island had similar increases and decreases in park visits even though Staten Island has far fewer parks than the Bronx, which means that parks in Staten Island were being more utilized.</p>
+<p>Finally, we can compare our time series of park visit data to see if it correlated with crimes data. We can create trend lines in our Mobility data to see if they match crime rates.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data with trend lines for Mobility Data</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(selected_regions2<span class="sc">$</span>county)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(selected_regions2, county <span class="sc">==</span> borough)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> avg7)) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Indexed Park Mobility Data In"</span>, borough), <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Mobility Relative to Pre-Pandemic"</span>) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-38-2.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-38-3.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-38-4.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 27 rows containing non-finite values (`stat_smooth()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-38-5.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<p>From the graphs above for park visits, we can see that visits increase from around February 2020 to August 2020, decrease from July 2020 to February 2021, increase from February 2021 to around July 2021, and then decrease again to February 2022. The only exception is Manhattan, which shows a mild decline from February 2020 to February 2021, and then follows the same trend as the rest of the boroughs.</p>
+<p>If this data is correlated with park crime data, we can expect to see similar trends in increases and decreases in crimes.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data and generate a line chart for each borough</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>boroughs <span class="ot">&lt;-</span> <span class="fu">unique</span>(crime_type_stats<span class="sc">$</span>BOROUGH)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>crimes_subset <span class="ot">=</span> crime_stats <span class="sc">%&gt;%</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Time_Period <span class="sc">&gt;</span> <span class="st">'2020-02-01'</span> <span class="sc">&amp;</span> Time_Period <span class="sc">&lt;</span> <span class="st">'2022-02-01'</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (borough <span class="cf">in</span> boroughs) {</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  borough_data <span class="ot">&lt;-</span> <span class="fu">filter</span>(crimes_subset, BOROUGH <span class="sc">==</span> borough)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(borough_data, <span class="fu">aes</span>(<span class="at">x =</span> Time_Period, <span class="at">y =</span> Total_Crimes)) <span class="sc">+</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>()<span class="sc">+</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Pandemic Period NYC Park Crime Trends in"</span>, borough), <span class="at">x =</span> <span class="st">"Time Period"</span>, <span class="at">y =</span> <span class="st">"Number of Crimes"</span>) <span class="sc">+</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>), <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(p)</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-40-2.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-26-3.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-40-3.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-26-4.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-40-4.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="results_files/figure-html/unnamed-chunk-26-5.png" class="img-fluid" width="672"></p>
+<p><img src="results_files/figure-html/unnamed-chunk-40-5.png" class="img-fluid" style="width:100.0%"></p>
 </div>
 </div>
-<p>Data is sparse for STATEN ISLAND, therefore we can ignore the trend lines for STATEN ISLAND. For other crime types, the trend lines are basically consistent with the overall crime patterns except robbery in MANHATTAN. This negative relationship with unemployment rate indicate no direct connections or there are other more important factors that are not taken into account here.</p>
+<p>From the graphs above, we can see that crimes generally increase from April 2020 to July 2020, followed by a decrease from July 2020 to January 2021, followed by an increase from January 2021 to October 2021, and then a decrease from July 2021 to January 2022. Very generally, this follows the same pattern as mobility data, with variations only in a few months. This indicates that during the pandemic period, park visits were correlated in trends with crime frequency at parks. However, we note that this also correlated with warmer weather and potentially numberous other factors.</p>
 
 
 </section>
