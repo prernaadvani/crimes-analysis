@@ -1,93 +1,60 @@
 // add your JavaScript/D3 to this file
 
 // Define dimensions and margins for the chart
-const margin = { top: 20, right: 20, bottom: 60, left: 40 },
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+const width = 450,
+    height = 450,
+    margin = 40;
 
-// Append the svg object to the div with id="plot"
-const svg = d3.select("#objects")
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+const radius = Math.min(width, height) / 2 - margin;
+
+// append the svg object to the div called 'plot'
+const svg = d3.select("#plot")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
   .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform", `translate(${width/2}, ${height/2})`);
 
-// Load the data
-d3.json("../crime_stats.json").then(function(data) {
-  // Group the data by Time_Period
-  const sumByPeriod = d3.group(data, d => d.Time_Period);
+// create 5 data sets
+const data1 = {BURGLARY: 4, FELONY_ASSAULT: 26, GRAND_LARCENY:91, GRAND_LARCENY_MV:2, MURDER:1, RAPE: 3, ROBBERY: 16}
+const data2 = {BURGLARY: 0, FELONY_ASSAULT: 6, GRAND_LARCENY:13, GRAND_LARCENY_MV:0, MURDER:1, RAPE: 0, ROBBERY: 31}
+const data3 = {BURGLARY: 3, FELONY_ASSAULT: 35, GRAND_LARCENY:45, GRAND_LARCENY_MV:2, MURDER:0, RAPE: 0, ROBBERY: 13}
+const data4 = {BURGLARY: 1, FELONY_ASSAULT: 43, GRAND_LARCENY:24, GRAND_LARCENY_MV:4, MURDER:0, RAPE: 1, ROBBERY: 21}
+const data5 = {BURGLARY: 0, FELONY_ASSAULT: 16, GRAND_LARCENY:0, GRAND_LARCENY_MV:0, MURDER:0, RAPE: 1, ROBBERY: 0}
 
-  // Extract a list of boroughs
-  const boroughs = [...new Set(data.map(d => d.BOROUGH))];
+// set the color scale
+const color = d3.scaleOrdinal()
+  .domain(["BURGLARY", "FELONY_ASSAULT", "GRAND_LARCENY", "GRAND_LARCENY_MV", "MURDER", "RAPE", "ROBBERY"])
+  .range(d3.schemeDark2);
 
-  // Create a color scale
-  const color = d3.scaleOrdinal()
-    .domain(boroughs)
-    .range(d3.schemeCategory10);
+function update(data) {
 
-  // Create a scale for the x-axis
-  const x0 = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.1)
-    .domain(Array.from(sumByPeriod.keys()));
+  // Compute the position of each group on the pie:
+  const pie = d3.pie()
+    .value(function(d) {return d[1]; })
+    .sort(function(a, b) { return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+  const data_ready = pie(Object.entries(data))
 
-  const x1 = d3.scaleBand()
-    .padding(0.05)
-    .domain(boroughs)
-    .rangeRound([0, x0.bandwidth()]);
+  // map to data
+  const u = svg.selectAll("path")
+    .data(data_ready)
 
-  // Create a scale for the y-axis
-  const y = d3.scaleLinear()
-    .rangeRound([height, 0])
-    .domain([0, d3.max(data, d => d.Total_Crimes)]).nice();
+  // Build the pie chart:
+  u
+    .join('path')
+    .transition()
+    .duration(1000)
+    .attr('d', d3.arc()
+      .innerRadius(0)
+      .outerRadius(radius)
+    )
+    .attr('fill', function(d){ return(color(d.data[0])) })
+    .attr("stroke", "white")
+    .style("stroke-width", "2px")
+    .style("opacity", 1)
 
-  // Add the x-axis
-  svg.append("g")
-    .attr("transform", `translate(0,${height})`)
-    .call(d3.axisBottom(x0));
+}
 
-  // Add the y-axis
-  svg.append("g")
-    .call(d3.axisLeft(y));
-
-  // Add the bars
-  const period = svg.selectAll(".period")
-    .data(Array.from(sumByPeriod))
-    .join("g")
-      .attr("class", "period")
-      .attr("transform", d => `translate(${x0(d[0])},0)`);
-
-  period.selectAll("rect")
-    .data(d => d[1])
-    .join("rect")
-      .attr("x", d => x1(d.BOROUGH))
-      .attr("y", d => y(d.Total_Crimes))
-      .attr("width", x1.bandwidth())
-      .attr("height", d => height - y(d.Total_Crimes))
-      .attr("fill", d => color(d.BOROUGH));
-
-  // Add a legend
-  const legend = svg.append("g")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 10)
-    .attr("text-anchor", "end")
-    .selectAll("g")
-    .data(boroughs.slice().reverse())
-    .join("g")
-      .attr("transform", (d, i) => `translate(0,${i * 20})`);
-
-  legend.append("rect")
-    .attr("x", width - 19)
-    .attr("width", 19)
-    .attr("height", 19)
-    .attr("fill", color);
-
-  legend.append("text")
-    .attr("x", width - 24)
-    .attr("y", 9.5)
-    .attr("dy", "0.32em")
-    .text(d => d);
-});
-
+// Initialize the plot with the first dataset
+update(data1)

@@ -1,13 +1,20 @@
 # Interactive graph
 
+Here, we show a pie chart with data from the most recent quarter, 3Q 2023. The graph shows the split of crimes that occurred during this quarter. This interactive graph allows users to select a borough and view the different types of crimes that occurred during 3Q 2024.
+
 <style>
   * {
     font-family: sans-serif;
   }
 </style> 
 
-<div id="plot">
-</div>
+<button onclick="update(data1)">Manhattan</button>
+<button onclick="update(data2)">Bronx</button>
+<button onclick="update(data3)">Brooklyn</button>
+<button onclick="update(data4)">Queens</button>
+<button onclick="update(data5)">Staten Island</button>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<svg id="plot" width="960" height="500"></svg>
+
+<script src="https://d3js.org/d3.v6.js"></script>
 <script src="scripts/myscript.js"></script>

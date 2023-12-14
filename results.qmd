@@ -55,14 +55,8 @@ crime_stats <- all_data %>%
     summarize(Total_Crimes = sum(as.numeric(TOTAL), na.rm = TRUE))
 ```
 
-```{r, warning=FALSE, message=FALSE}
-# preparation for D3
-# Convert the crime_stats data frame to JSON and write to a file
-json_data <- jsonlite::toJSON(crime_stats, pretty = TRUE)
-write(json_data, "crime_stats.json")
-```
 
-```{r fig.width=11, fig.height=6.5, out.width='100%'}
+```{r fig.width=11, fig.height=6.5, out.width='100%', warning=FALSE, message=FALSE}
 custom_colors <- c("orange", "skyblue","pink", "#4DAF4A", "purple")
 
 # draw time series plot
@@ -86,7 +80,7 @@ There are increasing trends from 2015 to 2019. There is a noticeable drop in the
 
 Heatmap based on quarters and boroughs shows directly the seasonal patterns and densities of crimes.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ggplot(crime_stats, aes(x = Time_Period, y = BOROUGH, fill = Total_Crimes)) +
   geom_tile() +
   scale_fill_gradient(low = "lightblue", high = "red") +
@@ -111,7 +105,7 @@ The intensity of colors varies across boroughs, indicating that some areas consi
 
 To see the trends more clearly for boroughs, we draw separate bar charts with LOESS smoothing lines to illustrate the trends.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Function: Converts a string in the format "2019 Q1" to a date
 convert_to_date <- function(time_period) {
   parts <- strsplit(time_period, " ")[[1]]
@@ -127,7 +121,7 @@ crime_stats$Time_Period <- sapply(crime_stats$Time_Period, convert_to_date)
 crime_stats$Time_Period <- as.Date(crime_stats$Time_Period)
 ```
 
-```{r fig.width=11, fig.height=6.5, out.width='100%'}
+```{r fig.width=11, fig.height=6.5, out.width='100%', warning=FALSE, message=FALSE}
 # Plot the time series for each borough and add a LOESS smoothing line
 boroughs <- unique(crime_stats$BOROUGH)
 
@@ -200,7 +194,7 @@ These observed crime patterns may be influenced by different socio-economic cond
 
 Larger parks may present more opportunities for criminal activities due to their expansive areas and diverse usage, while smaller parks could potentially have fewer incidents owing to their limited space and easier surveillance. To see whether there are relationship between park sizes and crime rates, we will explore the scatterplot to understand how park sizes correlate with the prevalence of crime within these boroughs.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 all_data$TOTAL <- as.numeric(all_data$TOTAL)
 
 # Create a summary data frame
@@ -214,7 +208,7 @@ park_crime_stats <- all_data %>%
   ungroup() 
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Create the scatterplot
 ggplot(park_crime_stats, aes(x = Park_Size, y = Total_Crimes, color = BOROUGH)) +
   geom_point() +
@@ -230,7 +224,7 @@ ggplot(park_crime_stats, aes(x = Park_Size, y = Total_Crimes, color = BOROUGH)) 
 ```
 Outliers make this plot unclear. The majority of data points stack together. We will remove the outliers.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 # Coomputer IQR
 iqr_stats <- park_crime_stats %>%
   summarize(
@@ -336,7 +330,7 @@ We note grand larceny in STATEN ISLAND does not follow this general trend as it 
 
 We can do a closer analysis of park visits data during the pandemic period using Google Mobility data. This analysis will be completed from February 2020 until February 2022.
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #import Google Data and clean
 
 data = read.csv('https://raw.githubusercontent.com/ActiveConclusion/COVID19_mobility/master/google_reports/mobility_report_US.csv')
@@ -426,7 +420,7 @@ Based on the graph above, we can see that Brooklyn clearly has the most number o
 
 Finally, we can compare our time series of park visit data to see if it correlated with crimes data. We can create trend lines in our Mobility data to see if they match crime rates.
 
-```{r fig.width=11, fig.height=6.5, out.width='100%'}
+```{r fig.width=11, fig.height=6.5, out.width='100%', warning=FALSE, message=FALSE}
 #data with trend lines for Mobility Data
 boroughs <- unique(selected_regions2$county)
 
@@ -450,7 +444,7 @@ From the graphs above for park visits, we can see that visits increase from arou
 If this data is correlated with park crime data, we can expect to see similar trends in increases and decreases in crimes.
 
 
-```{r fig.width=11, fig.height=6.5, out.width='100%'}
+```{r fig.width=11, fig.height=6.5, out.width='100%', warning=FALSE, message=FALSE}
 # Filter data and generate a line chart for each borough
 boroughs <- unique(crime_type_stats$BOROUGH)
 

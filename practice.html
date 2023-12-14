@@ -11,9 +11,15 @@
 </head>
 <body>
 
-  <svg id="objects" width="960" height="500"></svg>
+  <button onclick="update(data1)">Manhattan</button>
+  <button onclick="update(data2)">Bronx</button>
+  <button onclick="update(data3)">Brooklyn</button>
+  <button onclick="update(data4)">Queens</button>
+  <button onclick="update(data5)">Staten Island</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <svg id="plot" width="960" height="500"></svg>
+
+  <script src="https://d3js.org/d3.v6.js"></script>
   <script src="scripts/myscript.js"></script>
 </body>
 </html>
