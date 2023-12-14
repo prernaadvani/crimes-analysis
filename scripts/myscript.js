@@ -1,8 +1,8 @@
 // add your JavaScript/D3 to this file
 
 // Define dimensions and margins for the chart
-const width = 450,
-    height = 450,
+const width = 960,
+    height = 500,
     margin = 40;
 
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
@@ -47,14 +47,66 @@ function update(data) {
     .duration(1000)
     .attr('d', d3.arc()
       .innerRadius(0)
-      .outerRadius(radius)
+      .outerRadius(radius- 10)
     )
     .attr('fill', function(d){ return(color(d.data[0])) })
     .attr("stroke", "white")
     .style("stroke-width", "2px")
     .style("opacity", 1)
 
+  // Compute polyline positions
+  const outerArc = d3.arc()
+    .innerRadius(radius * 0.9)
+    .outerRadius(radius * 0.9);
+
+  // Define the threshold for displaying labels and polylines
+  const minPercentageToShowLabel = 0.1; // Display labels for segments above this percentage
+
+  // Add polylines
+  svg.selectAll('polyline')
+    .data(data_ready)
+    .join('polyline')
+    .attr('points', function(d) {
+      if ((d.data[1] / d3.sum(Object.values(data)) * 100) < minPercentageToShowLabel) {
+        return null; // Don't display polyline for small segments
+      }
+      const posA = d3.arc().innerRadius(0).outerRadius(radius).centroid(d);
+      const posB = outerArc.centroid(d);
+      const posC = outerArc.centroid(d);
+      posC[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
+      return [posA, posB, posC];
+    })
+    .style('fill', 'none')
+    .attr('stroke', 'black')
+    .style('stroke-width', 1);
+
+  // Add text labels
+  svg.selectAll('text')
+    .data(data_ready)
+    .join('text')
+    .text(function(d) {
+      if ((d.data[1] / d3.sum(Object.values(data)) * 100) < minPercentageToShowLabel) {
+        return ''; // Don't display label for small segments
+      }
+      return `${d.data[0]}: ${(d.data[1] / d3.sum(Object.values(data)) * 100).toFixed(1)}%`;
+    })
+    .attr('transform', function(d) {
+      const pos = outerArc.centroid(d);
+      pos[0] = radius * 0.98 * (midAngle(d) < Math.PI ? 1 : -1);
+      return `translate(${pos})`;
+    })
+    .style('text-anchor', function(d) {
+      return midAngle(d) < Math.PI ? 'start' : 'end';
+    })
+    .style('font-size', 12);
+
+  // Compute angles
+  function midAngle(d) {
+    return d.startAngle + (d.endAngle - d.startAngle) / 2;
+  }
+
 }
 
 // Initialize the plot with the first dataset
 update(data1)
+
