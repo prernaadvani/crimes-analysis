@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,8 +91,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -111,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -125,7 +124,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">NYC Crimes Analysis</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/prernaadvani/crimes-analysis" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/prernaadvani/crimes-analysis" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -209,26 +208,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="description" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
-<p>As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.</p>
-<p>First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page">NYPD Crime Statistics</a>. The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. The data format is an excel file for each quarter that we plan to download onto our local drives and import into R. We will then clean and merge data for all quarters. For our study, we first focused on three factors: total number of different types of crimes, park size categories, and boroughs. Further, we investigated the influence of specific types of crimes.</p>
-<p>Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is <a href="https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm">NYC Unemployment Statistics</a>. Additionally, <a href="https://beta.bls.gov/dataQuery/search">BLS Data Finder</a> offered on this website is able to search unemployment data for NYC. We are downloading an excel file with all of the data from 2013-2023 onto our local drive and importing it into R. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.</p>
-<p>Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is <a href="https://www.google.com/covid19/mobility/">Mobility Data</a>. Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to February 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from <a href="https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv">this GitHub Repo</a>. Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we will only be focusing on parks and NYC, if permitted to use this dataset. We will be importing this data directly from github as a csv file for our analysis. The values provided show deviations from the baseline, which is set as the 5-week period Jan 3–Feb 6, 2020. We also note that any correlations generated from this data are at risk of containing a confunding variable since the data is only available during the pandemic period.</p>
+<p>As we are studying crimes at NYC parks and potential reasons, we collected three datasets: park crimes, unemployment, and mobility data.</p>
+<p>First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is <a href="https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page">NYPD Crime Statistics</a>. The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. The data format is an excel file for each quarter that we downloaded onto our local drives and imported into R. All of the downloaded data is available in <a href="https://github.com/prernaadvani/additional_data/tree/main/crime_data">this</a> Github folder for ease of reference and reproducibility. Once the data was imported, we cleaned and merged data for all quarters. For our study, we explored total number of different types of crimes, park size categories, and boroughs.</p>
+<p>Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on the NYC area. The link of data is <a href="https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm">NYC Unemployment Statistics</a>. Additionally, <a href="https://beta.bls.gov/dataQuery/search">BLS Data Finder</a> offered on this website is able to search unemployment data for NYC. We downloaded an excel file with all of the data from 2013-2023 onto our local drive and imported into R for our project. The file we imported is available <a href="https://github.com/prernaadvani/additional_data/blob/main/unemployment_rate.xlsx">here</a> for ease of reference and reproducibility. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.</p>
+<p>Last, we looked at high level mobility data from Google Community Mobility Reports. The link for data is <a href="https://www.google.com/covid19/mobility/">Mobility Data</a>. Daily data showing movement trends in places such as parks is available during the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to February 2022, and the data must be scraped from the published reports. To use this data, one must use a third party source that has scraped data into a csv file or complete the scrape themselves. We chose to use an exiting scrape, and the link for data is <a href="https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv">this GitHub Repo</a>. Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we focused only on parks and NYC. We imported this data directly from github as a csv file for our analysis. The values provided show deviations from the baseline, which is set as the 5-week period Jan 3–Feb 6, 2020. We also note that any correlations generated from this data are at risk of containing a confounding variable since the data is only available during the pandemic period.</p>
 </section>
 <section id="research-plan" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research Plan</h2>
-<p>We plan to use NYC crimes data to track how the frequency of different types of crimes has changed across time and different boroughs. We will then use unemployment data to glean and additional insights on correlations that may exist. Lastly, if permitted, we can derive any impacts of park visit frequency from February 2020-October 2022. A few different ideas for analysis are included below:</p>
+<p>We plan to use NYC crimes data to track how the frequency of different types of crimes has changed across time and in different boroughs. We will then use unemployment data to glean any additional insights or correlations that may exist. Lastly, we will derive any impacts of park visit frequency from February 2020-February 2022. A few different ideas for analysis are included below:</p>
 <ol type="1">
 <li><p>Time series analysis for crimes data. We will conduct time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations). In addition to overall crime trends, we will further analyze how specific types of crimes (murder, rape, etc.) vary over time.</p></li>
-<li><p>Heatmaps and bar charts for crimes data. We will illustrate crimes data in heatmaps based on boroughs and periods to find time and regional differences. We will use bar charts to show the total number of crimes in each borough, allowing for easy comparison across regions. We will also include bar charts that compare the annual crimes in each borough across different years.</p></li>
-<li><p>Relationship between crimes and employment rate. We will look into trends for total number of crimes and unemployment rates both annually and quarterly. We will first demonstrate these two variables in scatterplots. In detail, we will add trend lines and calculate correlation coefficients for these scatterplots to quantify the strength of the relationship.</p></li>
-<li><p>Relationship between crimes and mobility data. For February 2020 to October 2022, we may look into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.</p></li>
+<li><p>Heatmaps and bar charts for crimes data. We will illustrate crimes data in heatmaps based on boroughs and periods to find time and regional differences. We will use bar charts to show the total number of crimes in each borough, allowing for easy comparison across regions.</p></li>
+<li><p>Relationship between crimes and employment rate. We will look into trends for total number of crimes and unemployment rates. We will first demonstrate these two variables in line graphs to see the trends over time. We will then compare the trend lines for crime rates and unemployment rates to see if they are similar.</p></li>
+<li><p>Relationship between crimes and mobility data. For February 2020 to February 2022, we will look into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes by analyzing trend lines.</p></li>
 </ol>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
 <section id="crimes-data" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="crimes-data"><span class="header-section-number">2.3.1</span> Crimes Data</h3>
-<p>First, we examine the crimes datasets. We will begin by first pulling data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.</p>
+<p>First, we examine the crimes dataset. As a sample, we will pull data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -358,7 +357,7 @@ GRAND LARCENY OF MOTOR VEHICLE                          TOTAL
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -441,7 +440,7 @@ GRAND LARCENY OF MOTOR VEHICLE                          TOTAL
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -487,7 +486,7 @@ GRAND LARCENY OF MOTOR VEHICLE                          TOTAL
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Since the Mobility data is defined by counties and our NYC crimes data is defined by borough, we can filter for counties that encompass in the 5 NYC boroughs.</p>
@@ -536,7 +535,7 @@ GRAND LARCENY OF MOTOR VEHICLE                          TOTAL
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b-%d-%Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Since the data is tough to read in detail, we can summarize it by each month of data collected</p>
@@ -555,7 +554,7 @@ GRAND LARCENY OF MOTOR VEHICLE                          TOTAL
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="data_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+<p><img src="data_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

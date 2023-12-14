@@ -2,31 +2,31 @@
 
 ## Description
 
-As we are studying crimes at NYC parks and potential reasons, we collected three datasets: crimes, unemployment, and mobility data.
+As we are studying crimes at NYC parks and potential reasons, we collected three datasets: park crimes, unemployment, and mobility data.
 
-First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page). The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. The data format is an excel file for each quarter that we plan to download onto our local drives and import into R. We will then clean and merge data for all quarters. For our study, we first focused on three factors: total number of different types of crimes, park size categories, and boroughs. Further, we investigated the influence of specific types of crimes.
+First, we collected crime data in NYC from NYPD official websites focused on crime statistics. The link for the data is [NYPD Crime Statistics](https://www.nyc.gov/site/nypd/stats/crime-statistics/park-crime-stats.page). The data covers quarters from 2014 to 2023. The data for each quarter shows features like numbers of crimes, park sizes, and boroughs. The data format is an excel file for each quarter that we downloaded onto our local drives and imported into R. All of the downloaded data is available in [this](https://github.com/prernaadvani/additional_data/tree/main/crime_data) Github folder for ease of reference and reproducibility. Once the data was imported, we cleaned and merged data for all quarters. For our study, we explored total number of different types of crimes, park size categories, and boroughs.
 
-Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. We are downloading an excel file with all of the data from 2013-2023 onto our local drive and importing it into R. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.
+Second, we collected unemployment data from U.S. Bureau of Labor Statistics official website focused on the NYC area. The link of data is [NYC Unemployment Statistics](https://www.bls.gov/regions/northeast/data/xg-tables/ro2xglausnyc.htm). Additionally, [BLS Data Finder](https://beta.bls.gov/dataQuery/search) offered on this website is able to search unemployment data for NYC. We downloaded an excel file with all of the data from 2013-2023 onto our local drive and imported into R for our project. The file we imported is available [here](https://github.com/prernaadvani/additional_data/blob/main/unemployment_rate.xlsx) for ease of reference and reproducibility. Monthly unemployment data is available from 2013 to 2023. Columns include the year, month, and annual average unemployment in wide format.
 
-Last, we looked at high level mobility data from Google Community Mobility Reports. The link of data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data of movement trend in places such as parks is available in the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to February 2022, and the data must be scraped from the published reports. If we want to use the data, we will have to use a third party source that has scraped data into a csv file. The link for a potential scrape is from [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv). Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we will only be focusing on parks and NYC, if permitted to use this dataset. We will be importing this data directly from github as a csv file for our analysis. The values provided show deviations from the baseline, which is set as the 5-week period Jan 3–Feb 6, 2020. We also note that any correlations generated from this data are at risk of containing a confunding variable since the data is only available during the pandemic period.
+Last, we looked at high level mobility data from Google Community Mobility Reports. The link for data is [Mobility Data](https://www.google.com/covid19/mobility/). Daily data showing movement trends in places such as parks is available during the Covid-19 period. A few restrictions on this data include: it is only available from February 2020 to February 2022, and the data must be scraped from the published reports. To use this data, one must use a third party source that has scraped data into a csv file or complete the scrape themselves. We chose to use an exiting scrape, and the link for data is [this GitHub Repo](https://github.com/ActiveConclusion/COVID19_mobility/blob/master/google_reports/mobility_report_US.csv). Though the dataset includes other locations (such as grocery stores), and other regions (different states in the US), we focused only on parks and NYC. We imported this data directly from github as a csv file for our analysis. The values provided show deviations from the baseline, which is set as the 5-week period Jan 3–Feb 6, 2020. We also note that any correlations generated from this data are at risk of containing a confounding variable since the data is only available during the pandemic period.
 
 ## Research Plan
 
-We plan to use NYC crimes data to track how the frequency of different types of crimes has changed across time and different boroughs. We will then use unemployment data to glean and additional insights on correlations that may exist. Lastly, if permitted, we can derive any impacts of park visit frequency from February 2020-October 2022. A few different ideas for analysis are included below:
+We plan to use NYC crimes data to track how the frequency of different types of crimes has changed across time and in different boroughs. We will then use unemployment data to glean any additional insights or correlations that may exist. Lastly, we will derive any impacts of park visit frequency from February 2020-February 2022. A few different ideas for analysis are included below:
 
 1. Time series analysis for crimes data. We will conduct time series analysis to look into components including long term trends, seasonality (systematic, calendar related movements), and irregularity (unsystematic, short term fluctuations). In addition to overall crime trends, we will further analyze how specific types of crimes (murder, rape, etc.) vary over time.
 
-2. Heatmaps and bar charts for crimes data. We will illustrate crimes data in heatmaps based on boroughs and periods to find time and regional differences. We will use bar charts to show the total number of crimes in each borough, allowing for easy comparison across regions. We will also include bar charts that compare the annual crimes in each borough across different years.
+2. Heatmaps and bar charts for crimes data. We will illustrate crimes data in heatmaps based on boroughs and periods to find time and regional differences. We will use bar charts to show the total number of crimes in each borough, allowing for easy comparison across regions. 
 
-3. Relationship between crimes and employment rate. We will look into trends for total number of crimes and unemployment rates both annually and quarterly. We will first demonstrate these two variables in scatterplots. In detail, we will add trend lines and calculate correlation coefficients for these scatterplots to quantify the strength of the relationship.
+3. Relationship between crimes and employment rate. We will look into trends for total number of crimes and unemployment rates. We will first demonstrate these two variables in line graphs to see the trends over time. We will then compare the trend lines for crime rates and unemployment rates to see if they are similar.
 
-4. Relationship between crimes and mobility data. For February 2020 to October 2022, we may look into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes.
+4. Relationship between crimes and mobility data. For February 2020 to February 2022, we will look into the number of crimes and park attendance levels, investigating whether visitor flow affects crimes by analyzing trend lines.
 
 ## Missing value analysis
 
 ### Crimes Data
 
-First, we examine the crimes datasets. We will begin by first pulling data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.
+First, we examine the crimes dataset. As a sample, we will pull data for 3Q23 for a high level overview. After determining data cleans, we will merge data for multiple quarters. We can see that there are few missing values in our data. We can just delete the records with missing values.
 
 ```{r, warning=FALSE, message=FALSE}
 library(readxl)
@@ -82,6 +82,7 @@ ggplot(borough_data, aes(x = BOROUGH, y = Total_Crimes, fill = BOROUGH)) +
     labs(title="NYC Park Crime Distribution by Borough in 3Q23", x="Borough", y="Total Crimes") +
     theme(axis.text.x = element_text(angle = 90))
 ```
+
 
 ### Unemployment Rate Data
 
