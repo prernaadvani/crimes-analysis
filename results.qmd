@@ -65,7 +65,10 @@ ggplot(crime_stats, aes(x = Time_Period, y = Total_Crimes, fill = BOROUGH)) +
     theme_minimal() +
     scale_fill_manual(values = custom_colors) +  
     labs(title="NYC Park Crime Trends by Borough", x="Time Period", y="Total Crimes") +
-    theme(axis.text.x = element_text(angle = 90))
+    theme(axis.text.x = element_text(angle = 90, size = 11),
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 14),
+          legend.text = element_text(size = 12))
 ```
 
 This stacked bar chart shows trends of total crimes in 5 different NYC boroughs, covering a period from 2015 Q1 (First Quarter of 2015) to 2023 Q3 (Third Quarter of 2023).
@@ -89,7 +92,11 @@ ggplot(crime_stats, aes(x = Time_Period, y = BOROUGH, fill = Total_Crimes)) +
        x = "Year",
        y = "Borough",
        fill = "Total Crimes") +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90, size = 9.5),
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
+
 ```
 The provided plot is a heatmap that represents the total crimes reported in parks within the five boroughs of New York City over several years, from 2015 to 2023, by quarter. The color intensity represents the number of crimes, with darker red indicating a higher number of crimes and lighter blue colors indicating fewer crimes. 
 
@@ -136,7 +143,10 @@ for (borough in boroughs) {
     labs(title = paste("NYC Park Crime Trends in", borough),
          x = "Time Period",
          y = "Total Crimes") +
-    theme(axis.text.x = element_text(angle = 90)) 
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          axis.text.y = element_text(size = 13),
+          title = element_text(size = 14),
+          legend.text = element_text(size = 13))
   
   print(p)
 }
@@ -174,7 +184,11 @@ for (borough in boroughs) {
     geom_line() +
     theme_minimal() +
     labs(title = paste("NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 13),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
   
   print(p)
 }
@@ -215,12 +229,17 @@ ggplot(park_crime_stats, aes(x = Park_Size, y = Total_Crimes, color = BOROUGH)) 
   #scale_x_log10() +  # Logarithmic scale for park size
   theme_minimal() +
   labs(
-    title = "Relationship between Park Size, Crime, and Borough",
+    title = "Relationship between Park Size and Crimes",
     x = "Park Size (Acres, log scale)",
     y = "Total Crimes",
     color = "Borough"
   ) +
-  theme(legend.position = "bottom")
+  theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
+  
 ```
 Outliers make this plot unclear. The majority of data points stack together. We will remove the outliers.
 
@@ -246,12 +265,16 @@ ggplot(park_crime_stats_filtered, aes(x = Park_Size, y = Total_Crimes, color = B
   geom_point() +
   theme_minimal() +
   labs(
-    title = "Relationship between Park Size, Crime, and Borough (Outliers Removed)",
+    title = "Relationship between Park Size and Crime (Outliers Removed)",
     x = "Park Size (Acres)",
     y = "Total Crimes",
     color = "Borough"
   ) +
-  theme(legend.position = "bottom")
+  theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
 ```
 There's a dense cluster of points near the origin, indicating that smaller parks tend to have lower counts of total crimes. This could suggest that park size is a factor in crime occurrence, with smaller parks offering fewer opportunities for crime. However, there is no distinct upward trend line that would indicate a clear positive correlation between park size and crime rates.
 
@@ -316,7 +339,11 @@ for (borough in boroughs) {
     geom_smooth()+
     theme_minimal() +
     labs(title = paste("NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 13),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
   
   print(p)
 }
@@ -365,7 +392,11 @@ ggplot(selected_regions, aes(x = date, y = parks, color = county)) +
     geom_line() +
     theme_minimal() +
     labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
 ```
 
 In the graph above, we can see lots of fluctuations, which may be because park visitation increases on the weekends. To view a more consistent set of data, we can create a 7-day moving average so that the fluctuations are absorbed into the average of 7 days. For example, the value for park visits on February 7th will be average of the values from February 1-7.
@@ -378,7 +409,11 @@ ggplot(selected_regions2, aes(x = date, y = avg7, color = county)) +
     geom_line() +
     theme_minimal() +
     labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
 ```
 
 The first date of data is now Febuary 21 2020 instead of February 15 2020 since we are calculating a 7 day average. This means that our values no longer start at the indexed value = 0, which represents February 15 2020. In the graph above, we see that all counties generally follow the same trajectory: park visits increased steadily through the summer of 2020, and then decreased beginning in October 2020 through winter before picking back up in March 2021 for the summer and decreasing one last time starting in around September 2021 through February 2022. This aligns with more pleasant weather patterns to be outside. 
@@ -391,7 +426,11 @@ ggplot(selected_regions2, aes(x = date, y = avg7, color = county)) +
     theme_minimal() +
     facet_grid(~county) +
     labs(title = "Change in Park Visits From Baseline", x = "Date", y = "Change From Baseline") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 12),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
 
 ```
 From the graphs above, we can see that Queens saw the greatest increase in park visits compared to the other boroughs. At its peak around July 2020, park visits were more than 150% higher than the pre-pandemic levels in January 2020. Park visits in Queens peaked again during the following summer around July 2021 at ~120% higher than pre-pandemic levels. On the contrary, Manhattan saw the smallest increase in park visits (at its peak in February 2020, it was ~12.5% higher than pre=pandemic) and it also represents the borough with the lowest overall decline in park visits (at it's trough in March 2020, it was ~70% below pre-pandemic levels). The Bronx and Staten Island had similar park frequency estimates, with peaks around 25-50% higher than pre-pandemic and lows around 50% below pre-pandemic, around the same times. 
@@ -413,7 +452,8 @@ number_of_parks$BOROUGH = factor(number_of_parks$BOROUGH,number_of_parks$BOROUGH
 ggplot(na.omit(number_of_parks), aes(x = BOROUGH, y = parks, fill = BOROUGH)) +
     geom_col() +
     theme_classic() +
-    labs(title = "Number of Parks by Borough", x = "Borough", y = "Number of Parks") 
+    labs(title = "Number of Parks by Borough", x = "Borough", y = "Number of Parks") +
+    theme(axis.text.x = element_text(angle = 90))
 ```
 
 Based on the graph above, we can see that Brooklyn clearly has the most number of parks and Staten Island has the fewest, which means that there likely is no correlation between the visits to parks and the number of parks in the borough. However, since the visits are relative to pre-pandemic levels, it could also be the case that Brooklyn parks were heavily visited in the pre-pandemic periods such that there was not too much of an increase during the pandemic. Based on the number of parks above, we can also infer that the Bronx and Staten Island had similar increases and decreases in park visits even though Staten Island has far fewer parks than the Bronx, which means that parks in Staten Island were being more utilized and yet had fewer crimes. 
@@ -432,7 +472,11 @@ for (borough in boroughs) {
     geom_smooth()+
     theme_minimal() +
     labs(title = paste("Indexed Park Mobility Data In", borough), x = "Date", y = "Mobility Relative to Pre-Pandemic") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 13),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
   
   print(p)
 }
@@ -459,7 +503,11 @@ for (borough in boroughs) {
     geom_smooth()+
     theme_minimal() +
     labs(title = paste("Pandemic Period NYC Park Crime Trends in", borough), x = "Time Period", y = "Number of Crimes") +
-    theme(axis.text.x = element_text(angle = 90), legend.position = "bottom")
+    theme(axis.text.x = element_text(angle = 90, size = 12),
+          legend.position = "bottom",
+          axis.text.y = element_text(size = 13),
+          title = element_text(size = 13),
+          legend.text = element_text(size = 12))
   
   print(p)
 }
