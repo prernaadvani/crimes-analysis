@@ -16,6 +16,8 @@ Our approach involves various methods of data slicing, manipulation, and visuali
 
 ## Contributing
 
+We summarize our findings here.
+
 ### Crimes Analysis:
 
 - Crime rates fluctuate over time and tend to be higher in the third quarter.
