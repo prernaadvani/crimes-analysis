@@ -1,8 +1,10 @@
 # Interactive graph
 
-Here, we show a pie chart with data from the most recent quarter, 3Q 2023. The graph shows the split of crimes that occurred during this quarter. This interactive graph allows users to select a borough and view the different types of crimes that occurred during 3Q 2024.
+Here, we show a pie chart with data from the most recent quarter, 3Q 2023 (the 3rd quarter of 2023). The graph shows the split of crimes that occurred during this quarter. This interactive graph allows users to select a borough and view the different types of crimes that occurred during 3Q 2023. 
 
-From the graph, we aim to encourage residents and tourists to be more aware of their surroundings. For example, when people visit parks in Manhattan, they should take extra care to protect personal belongings because grand larceny is the most frequent occurrence. In Bronx, it is advisable for people to exercise caution regarding robbery incidents. It may be prudent to consider traveling in groups for added safety and to remain vigilant of any suspicious persons nearby.
+This graph highlights dominant crime types at a glance, allowing for quick identification of which crime types are most common in a given borough. This graph is also marked with percentages, which provides more precise and detailed information. When users click on different buttons to select boroughs, the pie segments which represent crime types transform in size, making it easier for uses to compare and contrast crime statistics across different boroughs.
+
+From the graph, we aim to encourage residents and tourists to be more aware of their surroundings. By highlighting the most common crimes in each borough, the tool serves as a practical guide for individuals to take appropriate precautions. For example, when people visit parks in Manhattan, they should take extra care to protect personal belongings because grand larceny is the most frequent occurrence. In Bronx, it is advisable for people to exercise caution regarding robbery incidents. It may be prudent to consider traveling in groups for added safety and to remain vigilant of any suspicious persons nearby.
 
 <style>
   * {
